@@ -24,7 +24,7 @@
 
 
 @extends('layouts.layout1')
-@section('title', 'Graphics Tablet - Home')
+@section('title', 'Hafos - Home')
 @section('hero')
     <div class="hero__item set-bg" data-setbg="img/banner/banner.jpg">
         <div class="hero__text">

@@ -65,8 +65,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="Ogani Template">
-    <meta name="keywords" content="Ogani, unica, creative, html">
+    <meta name="description" content="Hafos Fashion Template">
+    <meta name="keywords" content="Hafos, fashion, clothing, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="icon" type="image/png" href="{{URL::asset('img/favicon.png')}}"/>
@@ -178,7 +178,7 @@
     </div>
     <div class="humberger__menu__contact">
         <ul>
-            <li><i class="fa fa-envelope"></i> graphicstablet@gmail.com</li>
+            <li><i class="fa fa-envelope"></i> hafos.fashion@gmail.com</li>
             <li><i class="fa fa-truck"></i> Giao hàng miễn phí</li>
         </ul>
     </div>
@@ -194,7 +194,7 @@
                 <div class="col-lg-6 col-md-6">
                     <div class="header__top__left">
                         <ul>
-                            <li><i class="fa fa-envelope"></i> graphicstablet@gmail.com</li>
+                            <li><i class="fa fa-envelope"></i> hafos.fashion@gmail.com</li>
                             <li><i class="fa fa-truck"></i> Giao hàng miễn phí</li>
                         </ul>
                     </div>
@@ -409,7 +409,7 @@
                             <i class="fa fa-phone"></i>
                         </div>
                         <div class="hero__search__phone__text">
-                            <h5>+84 888 222 999</h5>
+                            <h5>+84 706 597 124</h5>
                             <span>Hỗ trợ 24/7</span>
                         </div>
                     </div>
@@ -433,15 +433,15 @@
                         <a href="/"><img src="{{URL::asset('img/logo.png')}}" alt=""></a>
                     </div>
                     <ul>
-                        <li><b><i class="fa fa-map-marker"></i> Địa chỉ:</b> Số 288 Đường Nguyễn Văn Linh, Hưng Lợi, Ninh Kiều, Cần Thơ</li>
-                        <li><b><i class="fa fa-phone"></i> Số điện thoại:</b> +84 888 222 999</li>
-                        <li><b><i class="fa fa-envelope"></i> Email:</b> graphicstablet@gmail.com</li>
+                        <li><b><i class="fa fa-map-marker"></i> Địa chỉ:</b> 432/12 Dương Bá Trạc, Phường 1, Quận 8, TP.HCM</li>
+                        <li><b><i class="fa fa-phone"></i> Số điện thoại:</b> +84 706 597 124</li>
+                        <li><b><i class="fa fa-envelope"></i> Email:</b> hafos.fashion@gmail.com</li>
                     </ul>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
                 <div class="footer__widget">
-                    <h6>Về Graphics Tablet</h6>
+                    <h6>Về Hafos Fashion</h6>
                     <ul>
                         <li><a href="#">Điều khoản</a></li>
                         <li><a href="#">Chính sách bảo mật</a></li>
@@ -477,7 +477,7 @@
             <div class="col-lg-12">
                 <div class="footer__copyright">
                     <div class="footer__copyright__text"><p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                            &copy;<script>document.write(new Date().getFullYear());</script> - Bản quyền thuộc về Graphics Tablet | Website được tạo bởi <i class="fa fa-heart" aria-hidden="true"></i> của <b>Phuong Mai</b>
+                            &copy;<script>document.write(new Date().getFullYear());</script> - Bản quyền thuộc về Hafos Fashion | Website được tạo bởi <i class="fa fa-heart" aria-hidden="true"></i> của <b>Minh Luan</b>
                             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p></div>
                     <div class="footer__copyright__payment"><img src="img/payment-item.png" alt=""></div>
                 </div>

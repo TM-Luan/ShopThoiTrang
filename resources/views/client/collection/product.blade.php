@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Graphics Tablet - Chi tiết sản phẩm')
+@section('title', 'Hafos - Chi tiết sản phẩm')
 
 @section('client')
     <?php

@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Chi tiết đơn hàng | Admin - Graphics Tablet')
+@section('title', 'Chi tiết đơn hàng | Admin - Hafos')
 @section('content')
     <!-- Static Table Start -->
     <div class="data-table-area mg-tb-15">

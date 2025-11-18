@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Graphics Tablet - Sản phẩm')
+@section('title', 'Hafos - Sản phẩm')
 
 @section('client')
 <style>

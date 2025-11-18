@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Graphics Tablet - Wishlist')
+@section('title', 'Hafos - Wishlist')
 
 @section('client')
     <!-- Breadcrumb Section Begin -->

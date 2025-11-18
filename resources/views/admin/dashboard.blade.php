@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Tổng quan | Admin - Graphics Tablet')
+@section('title', 'Tổng quan | Admin - Hafos')
 @section('content')
     <div class="section-admin container-fluid">
         <div class="row admin text-center">

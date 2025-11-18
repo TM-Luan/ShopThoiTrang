@@ -1,9 +1,8 @@
 @extends('layouts.master')
-@section('title', 'Graphics Tablet - Bài viết')
+@section('title', 'Hafos - Bài viết')
 
 @section('client')
 
-<!-- Breadcrumb Section Begin -->
 <section class="breadcrumb-section set-bg" data-setbg="img/breadcrumb.jpg">
     <div class="container">
         <div class="row">
@@ -19,9 +18,6 @@
         </div>
     </div>
 </section>
-<!-- Breadcrumb Section End -->
-
-<!-- Blog Section Begin -->
 <section class="blog spad">
     <div class="container">
         <div class="row">
@@ -32,7 +28,6 @@
                             <input type="text" placeholder="Tìm kiếm...">
                             <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
                         </form>
-                    </div>
                     </div>
                     <div class="blog__sidebar__item">
                         <h4>Bài viết mới</h4>
@@ -61,14 +56,15 @@
                             <a href="#">SmartPads</a>
                         </div>
                     </div>
-                </div>
+                </div> </div>
+            
             <div class="col-lg-8 col-md-7">
                 <div class="row">
                     @foreach($blogs as $blog)
                     <div class="col-lg-6 col-md-6 col-sm-6">
                         <div class="blog__item">
                             <div class="blog__item__pic">
-                                <img src="{{URL::asset('/upload/blogs/'.$blog->image)}}" alt="" class="img-object-fit">
+                                <img src="{{URL::asset('/upload/blogs/'.$blog->image)}}" alt="" class="img-object-fit" style="width: 100%; height: 200px; object-fit: cover;">
                             </div>
                             <div class="blog__item__text">
                                 <ul>
@@ -98,7 +94,4 @@
         </div>
     </div>
 </section>
-<!-- Blog Section End -->
-
-
 @stop

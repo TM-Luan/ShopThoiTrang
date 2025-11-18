@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Graphics Tablet - Đổi mật khẩu')
+@section('title', 'Hafos - Đổi mật khẩu')
 
 @section('client')
 

@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Graphics Tablet - Giới thiệu')
+@section('title', 'Hafos - Giới thiệu')
 
 @section('client')
     <!-- Breadcrumb Section Begin -->
@@ -20,45 +20,35 @@
     </section>
     <!-- Breadcrumb Section End -->
     <div class="container pt-5">
-        <h2 class="text-danger pb-4">GIỚI THIỆU VỀ GRAPHICS TABLET</h2>
+        <h2 class="text-danger pb-4">GIỚI THIỆU VỀ HAFOS</h2>
         <div class="node-news-full-body">
             <div class="node-news-full-body-container">
-                <p><strong>Tên công ty: Công Ty TNHH Đầu Tư và Phát Triển Công Nghệ GT.</strong></p>
+                <p><strong>Tên công ty: Công ty thời trang Hafos.</strong></p>
 
-                <p><strong>1. Địa chỉ</strong>&nbsp;Số 288 Đường Nguyễn Văn Linh, Hưng Lợi, Ninh Kiều, Cần Thơ</p>
+                <p><strong>1. Địa chỉ</strong>&nbsp;432/12 dương bá trạc, phường 1, quận 8, hồ chí minh</p>
 
                 <p>
-                    <strong>2. Số điện thoại</strong>&nbsp;<strong>+84 888 222 999</strong>
+                    <strong>2. Số điện thoại</strong>&nbsp;<strong>+84 706 597 124</strong>
                 </p>
 
-                <p><strong>Giám đốc :&nbsp;Đỗ Thị Phượng Mai.</strong>
-                </p>
-
-                <p><strong>Tên viết tắt :&nbsp;</strong><strong>GT INVESTMENT TECHNOLOGY DEVELOPMENT COMPANY LIMITED</strong></p>
+                <p><strong>Tên viết tắt :&nbsp;</strong><strong>HAFOS FASHION COMPANY</strong></p>
 
                 <p><strong>I. Ngành nghề kinh doanh :</strong></p>
 
-                <p>-&nbsp;Nhà Phân phối bảng vẽ đồ họa (Bảng vẽ
-                    điện tử)&nbsp;<strong>WACOM, HUION,
-                        PARBLO</strong>&nbsp;toàn miền Nam</p>
+                <p>-&nbsp;Phân phối và bán lẻ thời trang nam nữ cao cấp</p>
 
-                <p>-&nbsp;Chuyên cung cấp, phân phối sỉ và lẻ thiết
-                    bị công nghệ thông tin.</p>
+                <p>-&nbsp;Thiết kế và sản xuất trang phục theo xu hướng</p>
 
-                <p>- Sản xuất và kinh doanh máy tính, thiết bị điện
-                    tử.</p>
+                <p>- Nhập khẩu và phân phối phụ kiện thời trang</p>
 
-                <p>- Cho thuê máy tính, Laptop, thiết bị máy văn
-                    phòng.</p>
+                <p>- Tư vấn phong cách và hình ảnh cá nhân</p>
 
                 <p><strong>II. Quá trình hình thành :</strong></p>
 
-                <p><strong>Công ty TNHH Đầu tư và Phát triển Công
-                        nghệ GT:</strong>&nbsp;một thành viên
-                    gạo cội trong ngành công nghệ thông tin,&nbsp;ra
-                    đời năm 2018 ngay từ những ngày đầu mới thành
-                    lập, chúng tôi hiểu rằng kỹ thuật và dịch vụ tạo
-                    nên chất lượng và thương hiệu của doanh nghiệp.
+                <p><strong>Công ty thời trang Hafos:</strong>&nbsp;một thương hiệu thời trang trẻ trung và năng động,&nbsp;ra
+                    đời năm 2020 ngay từ những ngày đầu mới thành
+                    lập, chúng tôi hiểu rằng chất lượng và phong cách tạo
+                    nên giá trị và thương hiệu của doanh nghiệp.
                 </p>
 
                 <p>Trải qua một thời gian hoạt động, chúng tôi đã
@@ -76,24 +66,24 @@
                     ngũ công nhân viên sẵn sàng phục vụ mọi nhu cầu
                     dù bạn ở xa hay gần, dù bạn là khách hàng hiện
                     tại hay tương lai. Với đội ngũ nhân viên công ty
-                    nắm vững các công nghệ hiện đại, có kinh nghiệm
+                    nắm vững các xu hướng thời trang hiện đại, có kinh nghiệm
                     và nhiệt tình phục vụ khách hàng, chúng tôi
                     không chỉ cung cấp kịp thời cho khách hàng các
-                    sản phẩm công nghệ thông tin có chất lượng cao
+                    sản phẩm thời trang có chất lượng cao
                     với giá cả hợp lý, mà còn cung cấp cho khách
                     hàng những dịch vụ hậu mãi tin cậy.</p>
 
                 <p><strong>IV. Mục tiêu phấn đấu :</strong></p>
 
-                <p>-&nbsp;Trở thành một trong những công ty hàng đầu
-                    tại Cần Thơ cung cấp các sản phẩm CNTT có chất
+                <p>-&nbsp;Trở thành một trong những công ty thời trang hàng đầu
+                    tại TP.HCM cung cấp các sản phẩm thời trang có chất
                     lượng và giá cả tốt đến tận tay khách hàng.</p>
 
-                <p>- Phát triển và ứng dụng công nghệ, dịch vụ mới
+                <p>- Phát triển và ứng dụng xu hướng thời trang mới
                     nhất hiện nay.</p>
 
                 <p>- Mở rộng thị trường tiêu thụ và đa dạng hoá các
-                    sản phẩm CNTT.</p>
+                    sản phẩm thời trang.</p>
 
                 <p>- Nâng cao đời sống công nhân viên và văn hoá
                     doanh nghiệp.</p>
@@ -101,18 +91,17 @@
                 <p><strong>V. Định hướng phát triển của công ty
                         :</strong></p>
 
-
                 <p>- Giữ vững và tăng tốc độ phát triển trên mọi
                     lĩnh vực doanh số, nhân lực...</p>
 
-                <p>- Quan hệ hợp tác với các hãng sản xuất trong và
+                <p>- Quan hệ hợp tác với các hãng thời trang trong và
                     ngoài khu vực nhằm mở rộng mặt hàng cũng như hợp
-                    tác nghiên cứu phát triển công nghệ.</p>
+                    tác nghiên cứu phát triển mẫu mã.</p>
 
-                <p>Email :&nbsp;<strong>graphicstablet@gmail.com</strong>
+                <p>Email :&nbsp;<strong>hafos.fashion@gmail.com</strong>
                 </p>
 
-                <p><strong>Graphics Tablet hy vọng sẽ có cơ hội được
+                <p><strong>Hafos hy vọng sẽ có cơ hội được
                         đón tiếp và phục vụ quý Khách
                         Hàng</strong><strong>.</strong></p>
             </div>

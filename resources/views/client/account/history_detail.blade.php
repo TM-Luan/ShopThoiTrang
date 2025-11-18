@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Graphics Tablet - Chi tiết đơn hàng')
+@section('title', 'Hafos - Chi tiết đơn hàng')
 
 @section('client')
     <!-- Breadcrumb Section Begin -->

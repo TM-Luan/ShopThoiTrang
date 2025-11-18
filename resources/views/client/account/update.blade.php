@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Graphics Tablet - Cập nhật tài khoản')
+@section('title', 'Hafos - Cập nhật tài khoản')
 
 @section('client')
 {{--    @if ($errors->any())--}}
