@@ -73,7 +73,7 @@
                                 </ul>
                                 <h5><a href="/post/{{ $blog->id }}">{{ $blog->title }}</a></h5>
                                 <div>
-                                    {!! Illuminate\Support\Str::limit($blog->content, 100, $end='...') !!}
+                                    {{ Illuminate\Support\Str::limit(strip_tags($blog->content), 100, $end='...') }}
                                 </div>
                                 <a href="/post/{{ $blog->id }}" class="blog__btn">ĐỌC TIẾP <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
                             </div>
