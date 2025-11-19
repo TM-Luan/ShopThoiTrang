@@ -230,13 +230,13 @@
                 </div>
             </div>
             <div class="col-8 text-right">
-                <span>Công Ty TNHH Đầu Tư và Phát Triển <br> Công Nghệ GT</span>
+                <span>Công Ty Thời Trang Hafos</span>
             </div>
         </div>
 
         <div class="text">
             <p>Chào mừng khách hàng {{ $order[0]->name }}<br>
-            Cám ơn quý khách đã quan tâm và sử dụng dịch vụ của Graphics Tablet</p>
+            Cám ơn quý khách đã quan tâm và sử dụng dịch vụ của Hafos Fashion</p>
             <table class="mb-2">
                 <tr>
                     <th colspan="2">Thông tin đặt hàng:</th>
@@ -285,16 +285,16 @@
             </div>
             <div class="col-8">
                 <p>
-                    Địa chỉ: Số 288 Đường Nguyễn Văn Linh, Hưng Lợi, Ninh Kiều, Cần Thơ<br>
-                    Số điện thoại: +84 888 222 999<br>
-                    Email: graphicstablet@gmail.com<br>
+                   Địa chỉ: 432/12 Dương Bá Trạc, Phường 1, Quận 8, TP.HCM<br>
+                    Số điện thoại: +84 706 597 124<br>
+                    Email: hafos.fashion@gmail.com<br>
                 </p>
             </div>
         </div>
     </div>
     <div class="copy-right">
-       <p>©2021 - Bản quyền thuộc về Graphics Tablet</p>
+       <p></p>
     </div>
 </div>
 </body>
-</html>
+</html>©2024 - Bản quyền thuộc về Hafos Fashion

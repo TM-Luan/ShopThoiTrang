@@ -136,29 +136,57 @@ class CartController extends Controller
             'cart' => $cart
         ]);
     }
-    public function addWishlist($id)
+public function addWishlist($id)
     {
-        $all = Wishlist::where('id_user', '=', Auth::user()->id)->get();
-        foreach ($all as $item){
-            if($item->id_product == $id){
-                return redirect()->back()->with('status',"Sản phẩm đã có trong wishlist của bạn!");
-            }else{
-                session()->put('countW', session('countW') + 1);
-                Wishlist::create(array('id_product'=>$id, 'id_user'=>Auth::user()->id));
-                alert()->success('Thông báo!','Thêm sản phẩm vào wishlist thành công!');
-                return redirect()->back();
-            }
+        // Kiểm tra xác thực (thường đã được Middleware 'auth' kiểm tra, nhưng nên đặt kiểm tra Auth::check() ở đầu hàm để xử lý trường hợp không đăng nhập)
+        if (!Auth::check()) {
+            alert()->error('Thông báo!','Vui lòng đăng nhập để sử dụng tính năng này!');
+            return redirect()->back();
         }
+
+        $userId = Auth::id(); // Lấy ID người dùng hiện tại
+        $productId = $id;
+
+        // Tối ưu hóa: Dùng first() hoặc exists() để kiểm tra sự tồn tại (hiệu quả hơn get() và duyệt)
+        $exists = Wishlist::where('id_user', $userId)
+                          ->where('id_product', $productId)
+                          ->first();
+
+        if ($exists) {
+            // Sản phẩm đã có
+            return redirect()->back()->with('status', 'Sản phẩm đã có trong Wishlist của bạn!');
+        }
+
+        // Thêm mới sản phẩm
+        Wishlist::create([
+            'id_product' => $productId,
+            'id_user' => $userId,
+        ]);
+
+        // Cập nhật session count (nếu cần)
+        session()->put('countW', session('countW') + 1);
+
+        alert()->success('Thông báo!','Thêm sản phẩm vào Wishlist thành công!');
+        return redirect()->back();
     }
+
+    /**
+     * Hiển thị Wishlist. (Đã tối ưu hóa kiểm tra Auth)
+     */
     public function wishlist(){
-        if(Auth::user()){
+        if(Auth::check()){ // Sử dụng Auth::check()
             $categories = new Category();
             $cate = $categories->all(array('name', 'id'));
-            $list = Wishlist::where('id_user', '=', Auth::user()->id)->get();
+
+            // Dùng Auth::id() thay cho Auth::user()->id
+            $list = Wishlist::where('id_user', '=', Auth::id())->get();
+
             $wishlist = [];
             foreach ($list as $item){
+                // Product::find($item->id_product) là cách đúng
                 $wishlist[$item->id] = Product::find($item->id_product);
             }
+
             return view('client/wishlist', [
                 'categories' => $cate,
                 'wishlist'=>$wishlist
@@ -169,13 +197,25 @@ class CartController extends Controller
             return redirect()->back();
         }
     }
+
+    /**
+     * Xóa sản phẩm khỏi Wishlist.
+     */
     public function wishlistRemove($id){
-        session()->put('countW', session('countW') - 1);
-        $wishlist = new Wishlist();
-        $wishlist->withTrashed()->where('id', '=', $id)->forceDelete();
-        alert()->success('Thông báo!','Xóa sản phẩm trong wishlist thành công!');
-        return redirect()->back();
+        // Kiểm tra xem người dùng có được phép xóa item này không (nên thêm Auth::id() vào điều kiện)
+        if (Auth::check()) {
+            // Đảm bảo chỉ xóa item của chính người dùng
+            Wishlist::where('id', '=', $id)
+                    ->where('id_user', '=', Auth::id())
+                    ->forceDelete();
+            
+            session()->put('countW', session('countW') - 1);
+            alert()->success('Thông báo!','Xóa sản phẩm trong wishlist thành công!');
+            return redirect()->back();
+        }
+        return redirect()->back(); // Hoặc chuyển hướng đến trang đăng nhập nếu chưa đăng nhập
     }
+
     public function payment(Request $request){
         $order = session()->get('order', []);
         $order = [
