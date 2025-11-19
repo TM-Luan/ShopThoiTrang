@@ -11,6 +11,15 @@
                         <ul id="myTab3" class="tab-review-design">
                             <li class="active"><a href="#description"><i class="fa fa-plus-square-o" aria-hidden="true"></i> Thêm mới sản phẩm</a></li>
                         </ul>
+                        @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
                         <form action="/admin/products/insert" method="post"  class="product-tab-list tab-pane fade active in" id="description" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <div class="row">
@@ -62,11 +71,13 @@
                                             <textarea class="form-control" rows="2" placeholder="Mô tả ngắn" name="short_description"></textarea>
                                         </div>
                                         <select name="catalog_id" class="form-control pro-edt-select form-control-primary">
-                                            <option value="">Chọn loại sản phẩm</option>
-                                            @foreach($categories as $cate)
-                                                <option value="<?=$cate->id?>">{{ $cate->id }}</option>
-                                            @endforeach
-                                        </select>
+    <option value="">Chọn loại sản phẩm</option>
+    @foreach($categories as $cate)
+        <option value="{{ $cate->id }}">
+            {{ $cate->name }} 
+        </option>
+    @endforeach
+</select>
                                     </div>
                                 </div>
                             </div>

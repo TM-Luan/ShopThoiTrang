@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use App\Models\Category;
 class Product extends Model
 {
     use HasFactory, SoftDeletes;
@@ -25,5 +25,9 @@ class Product extends Model
         'outstanding',
         'catalog_id',
     ];
-
+public function catalog()
+    {
+        // 'catalog_id' là tên cột khóa ngoại trong bảng products
+        return $this->belongsTo(Category::class, 'id', 'id');
+    }
 }

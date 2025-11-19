@@ -80,10 +80,10 @@ $link = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
                         {{-- </div>--}}
                     <a href="/add-to-cart/<?=$product->id?>" class="primary-btn">THÊM VÀO GIỎ HÀNG</a>
                     @if(Auth::user())
-                        <a href="/wishlist/<?=$product->id?>" class="heart-icon"><i class="fa fa-heart-o"
+                        <a href="/add-to-wishlist/<?=$product->id?>" class="heart-icon"><i class="fa fa-heart-o"
                                 aria-hidden="true"></i></a>
                     @else
-                        <a href="/wishlist" class="heart-icon"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+                        <a href="/add-to-wishlist" class="heart-icon"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
                     @endif
 
                     <ul>
@@ -213,9 +213,9 @@ if ($product->information) {
                         <div class="product__item__pic set-bg" data-setbg="{{URL::asset('/upload/products/' . $rel->image)}}">
                             <ul class="product__item__pic__hover">
                                 @if(Auth::user())
-                                    <li><a href="/wishlist/<?=$rel->id?>"><i class="fa fa-heart"></i></a></li>
+                                    <li><a href="/add-to-wishlist/<?=$rel->id?>"><i class="fa fa-heart"></i></a></li>
                                 @else
-                                    <li><a href="/wishlist"><i class="fa fa-heart"></i></a></li>
+                                    <li><a href="/add-to-wishlist"><i class="fa fa-heart"></i></a></li>
                                 @endif
                                 <li><a href="#"><i class="fa fa-retweet"></i></a></li>
                                 <li><a href="/add-to-cart/<?=$rel->id?>"><i class="fa fa-shopping-cart"></i></a></li>

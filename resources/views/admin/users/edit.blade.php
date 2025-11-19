@@ -19,7 +19,7 @@
                                             <label>Avatar</label>
                                             <div class="input-group mg-b-pro-edt">
                                                 <div class="input-group mg-b-pro-edt" style="width: 280px; height: 280px;">
-                                                    <img id="blah" src="{{URL::asset('/upload/'.$user->avatar)}}" style="border: 1px solid #e5e6e7;width: 100%;margin-bottom: 5px"/>
+                                                    <img id="blah" src="{{URL::asset('/upload/users/'.$user->avatar)}}" style="border: 1px solid #e5e6e7;width: 100%;margin-bottom: 5px"/>
                                                     <input type="file" name="image"  onchange="loadFile(event)" />
                                                     <input type="hidden" name="old_image" value="<?=$user->avatar?>" />
                                                 </div>

@@ -182,9 +182,9 @@
                                         <div class="product__discount__percent">-{{ $discount->discount }}%</div>
                                         <ul class="product__item__pic__hover">
                                             @if(Auth::user())
-                                                <li><a href="/wishlist/<?=$discount->id?>"><i class="fa fa-heart"></i></a></li>
+                                                <li><a href="/add-to-wishlist/<?=$discount->id?>"><i class="fa fa-heart"></i></a></li>
                                             @else
-                                                <li><a href="/wishlist"><i class="fa fa-heart"></i></a></li>
+                                                <li><a href="/add-to-wishlist"><i class="fa fa-heart"></i></a></li>
                                             @endif
                                             <li><a href="#"><i class="fa fa-retweet"></i></a></li>
                                             <li><a href="/add-to-cart/<?=$discount->id?>"><i class="fa fa-shopping-cart"></i></a></li>
@@ -241,9 +241,9 @@
                                 @endif
                                 <ul class="product__item__pic__hover">
                                     @if(Auth::user())
-                                        <li><a href="/wishlist/<?=$pro->id?>"><i class="fa fa-heart"></i></a></li>
+                                        <li><a href="/add-to-wishlist/<?=$pro->id?>"><i class="fa fa-heart"></i></a></li>
                                     @else
-                                        <li><a href="/wishlist"><i class="fa fa-heart"></i></a></li>
+                                        <li><a href="/add-to-wishlist"><i class="fa fa-heart"></i></a></li>
                                     @endif
                                     <li><a href="#"><i class="fa fa-retweet"></i></a></li>
                                     <li><a href="/add-to-cart/<?=$pro->id?>"><i class="fa fa-shopping-cart"></i></a></li>

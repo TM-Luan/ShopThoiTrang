@@ -40,7 +40,7 @@ class BlogsController extends Controller
         if (request()->hasFile('image')){
             $imageName = $request->file('image')->getClientOriginalName();
             $uploadedImage = $request->file('image');
-            $destinationPath = public_path('upload/');
+            $destinationPath = public_path('upload/blogs/');
             $uploadedImage->move($destinationPath, $imageName);
         }
         else {
