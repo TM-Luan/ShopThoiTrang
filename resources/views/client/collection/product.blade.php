@@ -128,6 +128,7 @@
                                     if($product->information){
                                     $info = explode("|", $product->information)
                                 ?>
+                                
                                 <table class="table">
                                     <tr>
                                         <td>Kích thước: <?=$info[0]?></td>

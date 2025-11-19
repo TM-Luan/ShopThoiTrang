@@ -251,16 +251,16 @@
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                    <div class="analytics-rounded mg-b-10 res-mg-t-30">
+                    <!-- <div class="analytics-rounded mg-b-10 res-mg-t-30">
                         <div class="analytics-rounded-content">
                             <h5>Phần trăm phân phối</h5>
                             <h2><span class="counter">60</span>/20</h2>
                             <div class="text-center">
                                 <div id="sparkline51"></div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
-                    <div class="analytics-rounded">
+                    <!-- <div class="analytics-rounded">
                         <div class="analytics-rounded-content">
                             <h5>Phần trăm phân chia</h5>
                             <h2><span class="counter">150</span>/<span class="counter">54</span></h2>
@@ -268,7 +268,7 @@
                                 <div id="sparkline52"></div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

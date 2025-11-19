@@ -12,4 +12,8 @@ class Cart extends Model
     protected $primaryKey = 'id';
     protected $table = 'cart';
     protected $fillable = array('id_product', 'name', 'quantity', 'image', 'price', 'id_user');
+    protected $casts = [
+    'price' => 'float',
+    'quantity' => 'integer',
+];
 }
