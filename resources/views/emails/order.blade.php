@@ -81,14 +81,14 @@
                         <td>{{ $item->size }}</td>
                         <td>{{ $item->color }}</td>
                         <td>{{ $item->quantity }}</td>
-                        <td>{{ number_format($item->price, 0, ',', '.') }} đ</td>
+                        <td>{{ number_format($item->price, 3, ',', '.') }} đ</td>
                     </tr>
                     <?php endforeach; ?>
                 </tbody>
                 <tfoot>
                     <tr class="total-row">
                         <td colspan="4" style="text-align: right;">Tổng cộng:</td>
-                        <td>{{ number_format($order[0]->total, 0, ',', '.') }} đ</td>
+                        <td>{{ number_format($order[0]->total, 3, ',', '.') }} đ</td>
                     </tr>
                 </tfoot>
             </table>

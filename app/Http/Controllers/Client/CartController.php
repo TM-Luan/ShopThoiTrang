@@ -327,8 +327,8 @@ class CartController extends Controller
             $total_price = $request->input('total');
             $price_to_pay = $total_price * 10;
             error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
-            $vnp_TmnCode = "ZVYN925E"; 
-            $vnp_HashSecret = "TJAPLVJKGQGEAKISHNHFBREVGCWMLWCW"; 
+            $vnp_TmnCode = "Y3JAV9YH"; 
+            $vnp_HashSecret = "MNI1M78XUUZ7K3FIFTBJX9XW4CVJ4WRI"; 
             $vnp_Url = "http://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
             $vnp_Returnurl = "http://127.0.0.1:8000/return";
             $vnp_TxnRef = date("YmdHis"); 
@@ -339,7 +339,7 @@ class CartController extends Controller
             $vnp_BankCode = 'NCB';
             $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
             $inputData = array(
-                "vnp_Version" => "2.0.0",
+                "vnp_Version" => "2.1.0",
                 "vnp_TmnCode" => $vnp_TmnCode,
                 "vnp_Amount" => $vnp_Amount,
                 "vnp_Command" => "pay",
@@ -355,24 +355,38 @@ class CartController extends Controller
             if (isset($vnp_BankCode) && $vnp_BankCode != "") {
                 $inputData['vnp_BankCode'] = $vnp_BankCode;
             }
+            // Sắp xếp mảng dữ liệu theo thứ tự a-z (Bắt buộc)
             ksort($inputData);
+            
             $query = "";
             $i = 0;
             $hashdata = "";
+            
+            // Vòng lặp tạo chuỗi hash và query string
             foreach ($inputData as $key => $value) {
                 if ($i == 1) {
-                    $hashdata .= '&' . $key . "=" . $value;
+                    // QUAN TRỌNG: Phải dùng urlencode cho cả key và value
+                    $hashdata .= '&' . urlencode($key) . "=" . urlencode($value);
                 } else {
-                    $hashdata .= $key . "=" . $value;
+                    $hashdata .= urlencode($key) . "=" . urlencode($value);
                     $i = 1;
                 }
                 $query .= urlencode($key) . "=" . urlencode($value) . '&';
             }
+
+            // Tạo đường dẫn thanh toán
             $vnp_Url = $vnp_Url . "?" . $query;
+            
+            // Tạo chữ ký bảo mật (Secure Hash)
             if (isset($vnp_HashSecret)) {
-                $vnpSecureHash = hash('sha256', $vnp_HashSecret . $hashdata);
-                $vnp_Url .= 'vnp_SecureHashType=SHA256&vnp_SecureHash=' . $vnpSecureHash;
+                // Dùng thuật toán HMAC-SHA512 (Chuẩn mới nhất)
+                $vnpSecureHash = hash_hmac('sha512', $hashdata, $vnp_HashSecret);
+                
+                // Thêm chữ ký vào đường dẫn
+                $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
             }
+            
+            // Chuyển hướng sang VNPAY
             return redirect($vnp_Url);
         }
     }

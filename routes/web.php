@@ -32,6 +32,7 @@ Route::get('/contact', 'App\Http\Controllers\Client\ContactController@index');
 Route::post('/order', 'App\Http\Controllers\Client\CartController@payment');
 Route::get('/return', 'App\Http\Controllers\Client\CartController@return');
 
+
 // --- Đưa Route Wishlist ra đây để Controller xử lý thông báo ---
 Route::get('/add-to-wishlist/{id}', 'App\Http\Controllers\Client\CartController@addWishlist'); 
 // ---------------------------------------------------------------
