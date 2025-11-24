@@ -2,189 +2,189 @@
 @section('title', 'Hafos - Chi tiết sản phẩm')
 
 @section('client')
-<?php
-$link = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    <?php
+    $link = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     ?>
-<!-- Breadcrumb Section Begin -->
-<section class="breadcrumb-section set-bg" data-setbg="{{URL::asset('img/breadcrumb.jpg')}}">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <div class="breadcrumb__text">
-                    <h2>{{ $product->name }}</h2>
-                    <div class="breadcrumb__option">
-                        <a href="/">Trang chủ</a>
-                        <a href="/collection">Bộ sưu tập</a>
-                        <span>{{ $product->name }}</span>
+    <section class="breadcrumb-section set-bg" data-setbg="{{URL::asset('img/breadcrumb.jpg')}}">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>{{ $product->name }}</h2>
+                        <div class="breadcrumb__option">
+                            <a href="/">Trang chủ</a>
+                            <a href="/collection">Bộ sưu tập</a>
+                            <span>{{ $product->name }}</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-<!-- Breadcrumb Section End -->
-
-<!-- Product Details Section Begin -->
-<section class="product-details spad">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6 col-md-6">
-                <div class="product__details__pic">
-                    <div class="product__details__pic__item">
-                        <img class="product__details__pic__item--large"
-                            src="{{URL::asset('/upload/products/' . $product->image)}}" alt="">
-                    </div>
-                    {{-- <div class="product__details__pic__slider owl-carousel">--}}
-                        {{-- <img data-imgbigurl="img/product/details/product-details-2.jpg" --}} {{--
-                            src="img/product/details/thumb-1.jpg" alt="">--}}
-                        {{-- <img data-imgbigurl="img/product/details/product-details-3.jpg" --}} {{--
-                            src="img/product/details/thumb-2.jpg" alt="">--}}
-                        {{-- <img data-imgbigurl="img/product/details/product-details-5.jpg" --}} {{--
-                            src="img/product/details/thumb-3.jpg" alt="">--}}
-                        {{-- <img data-imgbigurl="img/product/details/product-details-4.jpg" --}} {{--
-                            src="img/product/details/thumb-4.jpg" alt="">--}}
-                        {{-- </div>--}}
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-6">
-                <div class="product__details__text">
-                    <h3>{{ $product->name }}</h3>
-                    <div class="product__details__rating">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star-half-o"></i>
-                        <span>(18 reviews)</span>
-                    </div>
-
-                    @if($product->discount)
-                                        <?php
-                        $discount_price = $product->price - ($product->price * ($product->discount / 100));
-                                            ?>
-                                        <span class="product__details__price">{{ number_format($discount_price, 3, ".", ".") }} ₫</span>
-                                        <span class="pl-3"
-                                            style="text-decoration: line-through;color: #b2b2b2;font-size: 20px">{{ number_format($product->price, 3, ".", ".") }}
-                                            ₫</span>
-                    @else
-                        <span class="product__details__price">{{ number_format($product->price, 3, ".", ".") }} ₫</span>
-                    @endif
-
-                    <p>{{ $product->short_description }}</p>
-                    {{-- <div class="product__details__quantity">--}}
-                        {{-- <div class="quantity">--}}
-                            {{-- <div class="pro-qty">--}}
-                                {{-- <input type="text" value="1">--}}
-                                {{-- </div>--}}
-                            {{-- </div>--}}
-                        {{-- </div>--}}
-                    <a href="/add-to-cart/<?=$product->id?>" class="primary-btn">THÊM VÀO GIỎ HÀNG</a>
-                    @if(Auth::user())
-                        <a href="/add-to-wishlist/<?=$product->id?>" class="heart-icon"><i class="fa fa-heart-o"
-                                aria-hidden="true"></i></a>
-                    @else
-                        <a href="/add-to-wishlist" class="heart-icon"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
-                    @endif
-
-                    <ul>
-                        <li><b>Trạng thái: </b>
-                            <span><?php if ($product->availability == 0) {
-    echo 'Hết hàng';
-} else {
-    echo 'Còn hàng';
-}?></span>
-                        </li>
-                        {{-- <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>--}}
-                        <li><b>Thể loại: </b> <span>{{ $cateName->name }}</span></li>
-                        <li><b>Share on</b>
-                            <div class="share">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-instagram"></i></a>
-                                <a href="#"><i class="fa fa-pinterest"></i></a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="product__details__tab">
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab"
-                                aria-selected="true">Mô tả</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab" aria-selected="false">Thông
-                                tin</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab" aria-selected="false">Bình
-                                luận <span></span></a>
-                        </li>
-                    </ul>
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="tabs-1" role="tabpanel">
-                            <div class="product__details__tab__desc">
-                                <h6 class="pl-3">Mô tả sản phẩm</h6>
-                                {!! $product->description !!}
-                            </div>
+    </section>
+    <section class="product-details spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="product__details__pic">
+                        <div class="product__details__pic__item">
+                            <img class="product__details__pic__item--large"
+                                 src="{{URL::asset('/upload/products/' . $product->image)}}" alt="">
                         </div>
-                        <div class="tab-pane" id="tabs-2" role="tabpanel">
-                            <div class="product__details__tab__desc">
-                                <h6>Thông tin sản phẩm</h6>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="product__details__text">
+                        <h3>{{ $product->name }}</h3>
+                        <div class="product__details__rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-half-o"></i>
+                            <span>(18 reviews)</span>
+                        </div>
+
+                        @if($product->discount)
                                 <?php
-if ($product->information) {
-    // Chia chuỗi thông tin thành mảng
-    $info = explode("|", $product->information);
-        ?>
+                                $discount_price = $product->price - ($product->price * ($product->discount / 100));
+                                ?>
+                            <span class="product__details__price">{{ number_format($discount_price, 3, ".", ".") }} ₫</span>
+                            <span class="pl-3"
+                                  style="text-decoration: line-through;color: #b2b2b2;font-size: 20px">{{ number_format($product->price, 0, ".", ".") }}
+                                            ₫</span>
+                        @else
+                         
+                            <span class="product__details__price">{{ number_format($product->price, 3, ".", ".") }} ₫</span>
+                        @endif
 
-                                <table class="table">
-                                    <tr>
-                                        <td>Kích thước: <?= isset($info[0]) ? $info[0] : 'Đang cập nhật' ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Trọng lượng: <?= isset($info[1]) ? $info[1] : 'Đang cập nhật' ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Màu sắc: <?= isset($info[2]) ? $info[2] : 'Đang cập nhật' ?></td>
-                                    </tr>
-                                    <tr>
-                                        {{-- Đã sửa: Kiểm tra Key 3 trước khi hiển thị --}}
-                                        <td>Độ phân giải: <?= isset($info[3]) ? $info[3] : 'Đang cập nhật' ?></td>
-                                    </tr>
-                                </table>
-                                <?php }?>
+                        <p>{{ $product->short_description }}</p>
+
+                        <div class="product__options" style="margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid #ebebeb;">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                      <label for="product_size" style="font-weight: 700; color: #1c1c1c;">Kích thước (Size):</label>
+                                    <div class="form-group">
+                                      
+                                        <select class="form-control" id="product_size" style="height: 40px; border-radius: 0; cursor: pointer;">
+                                            <option value="S">Size S</option>
+                                            <option value="M" selected>Size M</option>
+                                            <option value="L">Size L</option>
+                                            <option value="XL">Size XL</option>
+                                            <option value="XXL">Size XXL</option>
+                                            <option value="29">Size 29</option>
+                                            <option value="30">Size 30</option>
+                                            <option value="31">Size 31</option>
+                                            <option value="32">Size 32</option>
+                                            <option value="Freesize">Freesize</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                      <label for="product_color" style="font-weight: 700; color: #1c1c1c;">Màu sắc:</label>
+                                    <div class="form-group">
+                                      
+                                        <select class="form-control" id="product_color" style="height: 40px; border-radius: 0; cursor: pointer;">
+                                            <option value="Đen">Màu Đen</option>
+                                            <option value="Trắng" selected>Màu Trắng</option>
+                                            <option value="Xanh">Màu Xanh</option>
+                                            <option value="Đỏ">Màu Đỏ</option>
+                                            <option value="Vàng">Màu Vàng</option>
+                                            <option value="Xám">Màu Xám</option>
+                                            <option value="Be">Màu Be</option>
+                                            <option value="Nâu">Màu Nâu</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="tab-pane" id="tabs-3" role="tabpanel">
-                            <div class="product__details__tab__desc">
-                                {{-- <h6 class="pl-4">Bình luận sản phẩm</h6>--}}
-                                {{-- <div class="contact-form pt-0">--}}
-                                    {{-- <div class="container">--}}
-                                        {{-- <form action="#">--}}
-                                            {{-- <div class="row">--}}
-                                                {{-- <div class="col-lg-6 col-md-6">--}}
-                                                    {{-- <input type="text" placeholder="Tên">--}}
-                                                    {{-- </div>--}}
-                                                {{-- <div class="col-lg-6 col-md-6">--}}
-                                                    {{-- <input type="text" placeholder="Email">--}}
-                                                    {{-- </div>--}}
-                                                {{-- <div class="col-lg-12 text-center">--}}
-                                                    {{-- <textarea placeholder="Nội dung"></textarea>--}}
-                                                    {{-- <button type="submit" class="site-btn">Gửi bình
-                                                        luận</button>--}}
-                                                    {{-- </div>--}}
-                                                {{-- </div>--}}
-                                            {{-- </form>--}}
-                                        {{-- </div>--}}
-                                    {{-- </div>--}}
-                                <div class="col-lg-12">
-                                    <div class="fb-like" data-href="<?=$link?>" data-width="" data-layout="standard"
-                                        data-action="like" data-size="small" data-share="true"></div>
-                                    <div class="fb-comments" data-href="<?=$link?>" data-width="100%"
-                                        data-numposts="50"></div>
+                        <a href="javascript:void(0)" onclick="addToCartWithOption({{$product->id}})" class="primary-btn">THÊM VÀO GIỎ HÀNG</a>
+
+                        <a href="/add-to-wishlist/{{ $product->id }}" class="heart-icon">
+                            <i class="fa fa-heart-o" aria-hidden="true"></i>
+                        </a>
+
+                        <ul class="mt-4">
+                            <li><b>Trạng thái: </b>
+                                <span><?php if ($product->availability == 0) {
+                                        echo 'Hết hàng';
+                                    } else {
+                                        echo 'Còn hàng';
+                                    }?></span>
+                            </li>
+                            <li><b>Thể loại: </b> <span>{{ $cateName->name }}</span></li>
+                            <li><b>Chia sẻ:</b>
+                                <div class="share">
+                                    <a href="#"><i class="fa fa-facebook"></i></a>
+                                    <a href="#"><i class="fa fa-twitter"></i></a>
+                                    <a href="#"><i class="fa fa-instagram"></i></a>
+                                    <a href="#"><i class="fa fa-pinterest"></i></a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="product__details__tab">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab"
+                                   aria-selected="true">Mô tả</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab" aria-selected="false">Thông
+                                    tin</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab" aria-selected="false">Bình
+                                    luận <span></span></a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                                <div class="product__details__tab__desc">
+                                    <h6 class="pl-3">Mô tả sản phẩm</h6>
+                                    {!! $product->description !!}
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tabs-2" role="tabpanel">
+                                <div class="product__details__tab__desc">
+                                    <h6>Thông tin sản phẩm</h6>
+                                    <?php
+                                    if ($product->information) {
+                                    $info = explode("|", $product->information);
+                                    ?>
+                                    <table class="table">
+                                        <tr>
+                                            <td style="width: 200px; font-weight: bold;">Chất liệu:</td>
+                                            <td><?= isset($info[0]) ? $info[0] : 'Đang cập nhật' ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-weight: bold;">Kiểu dáng:</td>
+                                            <td><?= isset($info[1]) ? $info[1] : 'Đang cập nhật' ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-weight: bold;">Xuất xứ:</td>
+                                            <td><?= isset($info[2]) ? $info[2] : 'Đang cập nhật' ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-weight: bold;">Thông tin khác:</td>
+                                            <td><?= isset($info[3]) ? $info[3] : 'Đang cập nhật' ?></td>
+                                        </tr>
+                                    </table>
+                                    <?php }?>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" id="tabs-3" role="tabpanel">
+                                <div class="product__details__tab__desc">
+                                    <div class="col-lg-12">
+                                        <div class="fb-like" data-href="<?=$link?>" data-width="" data-layout="standard"
+                                             data-action="like" data-size="small" data-share="true"></div>
+                                        <div class="fb-comments" data-href="<?=$link?>" data-width="100%"
+                                             data-numposts="50"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -192,56 +192,61 @@ if ($product->information) {
                 </div>
             </div>
         </div>
-    </div>
-</section>
-<!-- Product Details Section End -->
-
-<!-- Related Product Section Begin -->
-<section class="related-product">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="section-title related__product__title">
-                    <h2>Sản phẩm liên quan</h2>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            @foreach($related as $rel)
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="{{URL::asset('/upload/products/' . $rel->image)}}">
-                            <ul class="product__item__pic__hover">
-                                @if(Auth::user())
-                                    <li><a href="/add-to-wishlist/<?=$rel->id?>"><i class="fa fa-heart"></i></a></li>
-                                @else
-                                    <li><a href="/add-to-wishlist"><i class="fa fa-heart"></i></a></li>
-                                @endif
-                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                <li><a href="/add-to-cart/<?=$rel->id?>"><i class="fa fa-shopping-cart"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="product__item__text">
-                            <h6><a href="/product/<?=$rel->id?>">{{ $rel->name }}</a></h6>
-                            @if($rel->discount)
-                                                <?php
-                                $discount_price = $rel->price - ($rel->price * ($rel->discount / 100));
-                                                    ?>
-                                                <h5 class="product__item__price">{{ number_format($discount_price, 3, ".", ".") }} ₫<span
-                                                        class="pl-2"
-                                                        style="text-decoration: line-through;color: #b2b2b2;font-weight: normal;">{{ number_format($rel->price, 3, ".", ".") }}
-                                                        ₫</span></h5>
-                            @else
-                                <h5>{{ number_format($rel->price, 3, ".", ".") }} ₫</h5>
-                            @endif
-
-                        </div>
+    </section>
+    <section class="related-product">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title related__product__title">
+                        <h2>Sản phẩm liên quan</h2>
                     </div>
                 </div>
-            @endforeach
-        </div>
-    </div>
-</section>
-<!-- Related Product Section End -->
+            </div>
+            <div class="row">
+                <div class="categories__slider owl-carousel">
+                    @foreach($related as $rel)
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <div class="product__item">
+                                <div class="product__item__pic set-bg"
+                                     data-setbg="{{URL::asset('/upload/products/' . $rel->image)}}">
+                                    <ul class="product__item__pic__hover">
+                                        @if(Auth::user())
+                                            <li><a href="/add-to-wishlist/<?=$rel->id?>"><i class="fa fa-heart"></i></a></li>
+                                        @else
+                                            <li><a href="/add-to-wishlist"><i class="fa fa-heart"></i></a></li>
+                                        @endif
+                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                        <li><a href="/add-to-cart/<?=$rel->id?>"><i class="fa fa-shopping-cart"></i></a></li>
+                                    </ul>
+                                </div>
+                                <div class="product__item__text">
+                                    <h6><a href="/product/<?=$rel->id?>">{{ $rel->name }}</a></h6>
+                                    @if($rel->discount)
+                                            <?php
+                                            $discount_price = $rel->price - ($rel->price * ($rel->discount / 100));
+                                            ?>
+                                        <h5 class="product__item__price">{{ number_format($discount_price, 3, ".", ".") }} ₫<span
+                                                class="pl-2"
+                                                style="text-decoration: line-through;color: #b2b2b2;font-weight: normal;">{{ number_format($rel->price, 0, ".", ".") }}
+                                                            ₫</span></h5>
+                                    @else
+                                        <h5>{{ number_format($rel->price, 3, ".", ".") }} ₫</h5>
+                                    @endif
 
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+            </div>
+    </section>
+    <script>
+        function addToCartWithOption(id) {
+            var size = document.getElementById('product_size').value;
+            var color = document.getElementById('product_color').value;
+            // Chuyển hướng đến URL thêm giỏ hàng kèm tham số Size và Color
+            window.location.href = "/add-to-cart/" + id + "?size=" + encodeURIComponent(size) + "&color=" + encodeURIComponent(color);
+        }
+    </script>
 @stop

@@ -51,22 +51,21 @@
                                             </div>
                                             <div class="input-group mg-b-pro-edt">
                                                 <span class="input-group-addon"><i class="fa fa-usd" aria-hidden="true"></i></span>
-                                                <input type="text" class="form-control" value="{{ $product->price }}" name="price">
+                                                <input type="text" class="form-control" value="{{ number_format($product->price,0,'','') }}" name="price">
                                             </div>
                                             <div class="input-group mg-b-pro-edt">
-                                                <span class="input-group-addon"><i class="fa fa-usd" aria-hidden="true"></i></span>
+                                                <span class="input-group-addon"><i class="fa fa-percent" aria-hidden="true"></i></span>
                                                 <input type="text" class="form-control" value="{{ $product->discount }}" name="discount">
                                             </div>
                                             <div class="input-group mg-b-pro-edt">
-                                                <span class="input-group-addon"><i class="fa fa-puzzle-piece" aria-hidden="true"></i></span>
+                                                <span class="input-group-addon"><i class="fa fa-cubes" aria-hidden="true"></i></span>
                                                 <input type="text" class="form-control" value="{{ $product->availability }}" name="availability">
                                             </div>
                                             <div class="input-group mg-b-pro-edt">
-                                                <span class="input-group-addon"><i class="fa fa-clone" aria-hidden="true"></i></span>
+                                                <span class="input-group-addon"><i class="fa fa-file-text-o" aria-hidden="true"></i></span>
                                                 <textarea class="form-control" rows="2" name="short_description">{{ $product->short_description }}</textarea>
                                             </div>
                                             
-                                            {{-- ĐÃ SỬA: Code hiển thị danh mục gọn gàng và chuẩn Laravel --}}
                                             <div class="input-group mg-b-pro-edt">
                                                 <span class="input-group-addon"><i class="fa fa-list-ul" aria-hidden="true"></i></span>
                                                 <select name="catalog_id" class="form-control pro-edt-select form-control-primary">
@@ -82,36 +81,34 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                        {{-- ĐÃ SỬA: Xử lý explode an toàn --}}
                                         @php
                                             $info = explode("|", $product->information);
-                                            // Thêm các phần tử rỗng nếu thiếu để tránh lỗi Undefined offset
                                             $info = array_pad($info, 4, ""); 
                                         @endphp
 
                                         <div class="review-content-section">
                                             <label>Nổi bật: </label>
-                                            <input type="checkbox" {{ $product->outstanding == 1 ? 'checked' : '' }} value="1" name="outstanding" style="transform: scale(1.2, 1.2); margin-left: 5px; line-height: 6px;"><br>
+                                            <input type="checkbox" {{ $product->outstanding == 1 ? 'checked' : '' }} value="1" name="outstanding" style="transform: scale(1.2, 1.2); margin-left: 5px;"><br>
                                             
-                                            <label>Kích thước</label>
+                                            <label>Chất liệu</label>
                                             <div class="input-group mg-b-pro-edt">
                                                 <span class="input-group-addon"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
                                                 <input type="text" class="form-control" value="{{ $info[0] }}" name="kich_thuoc">
                                             </div>
                                             
-                                            <label>Trọng lượng</label>
+                                            <label>Kiểu dáng (Form)</label>
                                             <div class="input-group mg-b-pro-edt">
                                                 <span class="input-group-addon"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
                                                 <input type="text" class="form-control" value="{{ $info[1] }}" name="trong_luong">
                                             </div>
                                             
-                                            <label>Màu sắc</label>
+                                            <label>Xuất xứ</label>
                                             <div class="input-group mg-b-pro-edt">
                                                 <span class="input-group-addon"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
                                                 <input type="text" class="form-control" value="{{ $info[2] }}" name="mau_sac">
                                             </div>
                                             
-                                            <label>Độ phân giải</label>
+                                            <label>Thông tin khác</label>
                                             <div class="input-group mg-b-pro-edt">
                                                 <span class="input-group-addon"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
                                                 <input type="text" class="form-control" value="{{ $info[3] }}" name="do_phan_giai">
@@ -121,7 +118,7 @@
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <div class="review-content-section">
                                             <div class="form-group">
-                                                <label>Mô tả</label>
+                                                <label>Mô tả chi tiết</label>
                                                 <textarea id="summernote2" name="description">{{ $product->description }}</textarea>
                                             </div>
                                         </div>
@@ -130,7 +127,7 @@
                                 <div class="row">
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <div class="text-center mg-b-pro-edt custom-pro-edt-ds">
-                                            <button type="submit" class="btn btn-primary waves-effect waves-light m-r-10">Lưu</button>
+                                            <button type="submit" class="btn btn-primary waves-effect waves-light m-r-10">Cập nhật</button>
                                             <button type="button" class="btn btn-warning waves-effect waves-light">Hủy</button>
                                         </div>
                                     </div>
@@ -142,4 +139,4 @@
             </div>
         </div>
     </div>
-@stop   
+@stop

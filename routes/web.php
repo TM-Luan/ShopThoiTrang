@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth; // <-- Thêm dòng này nếu chưa có
 Auth::routes();
 
 // =========================================================================
-// ROUTE CLIENT (Routes công khai hoặc không cần đăng nhập)
+// ROUTE CLIENT (Routes công khai - KHÔNG CẦN ĐĂNG NHẬP VẪN VÀO ĐƯỢC)
 // =========================================================================
 Route::get('/', 'App\Http\Controllers\HomeController@index');
 Route::get('/home', 'App\Http\Controllers\HomeController@index');
@@ -32,6 +32,11 @@ Route::get('/contact', 'App\Http\Controllers\Client\ContactController@index');
 Route::post('/order', 'App\Http\Controllers\Client\CartController@payment');
 Route::get('/return', 'App\Http\Controllers\Client\CartController@return');
 
+// --- Đưa Route Wishlist ra đây để Controller xử lý thông báo ---
+Route::get('/add-to-wishlist/{id}', 'App\Http\Controllers\Client\CartController@addWishlist'); 
+// ---------------------------------------------------------------
+
+
 // =========================================================================
 // ROUTE CLIENT CẦN ĐĂNG NHẬP (Dùng middleware 'auth')
 // =========================================================================
@@ -45,12 +50,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/user/profile/change-pass/{id}', 'App\Http\Controllers\Client\AccountController@change');
     Route::post('/user/profile/update-pass/{id}', 'App\Http\Controllers\Client\AccountController@changePass');
 
-    // Chức năng Wishlist
+    // Chức năng Xem và Xóa Wishlist (Vẫn cần đăng nhập mới xem được danh sách)
     Route::get('/wishlist', 'App\Http\Controllers\Client\CartController@wishlist');
-    Route::get('/add-to-wishlist/{id}', 'App\Http\Controllers\Client\CartController@addWishlist'); // <-- Route Thêm Wishlist mới
-    Route::get('/wishlist-remove/{id}', 'App\Http\Controllers\Client\CartController@wishlistRemove'); // <-- Route Xóa Wishlist mới
+    Route::get('/wishlist-remove/{id}', 'App\Http\Controllers\Client\CartController@wishlistRemove');
 });
-
 
 // =========================================================================
 // ROUTE ADMIN (Dùng middleware 'admin')

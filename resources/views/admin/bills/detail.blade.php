@@ -1,7 +1,6 @@
 @extends('layouts.admin')
 @section('title', 'Chi tiết hóa đơn | Admin - Hafos')
 @section('content')
-    <!-- Static Table Start -->
     <div class="data-table-area mg-tb-15">
         <div class="container-fluid">
             <div class="row">
@@ -27,59 +26,28 @@
                                     <tr>
                                         <th data-field="state" data-checkbox="true"></th>
                                         <th data-field="id">ID</th>
-                                        <th data-field="name" data-editable="true">Mã đơn hàng</th>
-                                        <th data-field="email" data-editable="true">Tên sản phẩm</th>
-                                        <th data-field="address" data-editable="true">Đơn giá</th>
-                                        <th data-field="phone" data-editable="true">Số lượng</th>
-                                        <th data-field="total" data-editable="true">Tổng tiền</th>
+                                        <th data-field="name">Tên sản phẩm</th>
+                                        <th data-field="size">Size</th>
+                                        <th data-field="color">Màu sắc</th>
+                                        <th data-field="price">Đơn giá</th>
+                                        <th data-field="quantity">Số lượng</th>
+                                        <th data-field="total">Thành tiền</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td>1</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td>2</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td>3</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td>4</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td>5</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
+                                    {{-- Ví dụ cấu trúc nếu có dữ liệu --}}
+                                    {{-- @foreach($details as $item) --}}
+                                    {{-- <tr> --}}
+                                    {{--    <td></td> --}}
+                                    {{--    <td>{{ $item->id }}</td> --}}
+                                    {{--    <td>{{ $item->name }}</td> --}}
+                                    {{--    <td>{{ $item->size }}</td> --}}
+                                    {{--    <td>{{ $item->color }}</td> --}}
+                                    {{--    <td>{{ number_format($item->price) }}</td> --}}
+                                    {{--    <td>{{ $item->quantity }}</td> --}}
+                                    {{--    <td>{{ number_format($item->price * $item->quantity) }}</td> --}}
+                                    {{-- </tr> --}}
+                                    {{-- @endforeach --}}
                                     </tbody>
                                 </table>
                             </div>
@@ -89,5 +57,4 @@
             </div>
         </div>
     </div>
-    <!-- Static Table End -->
-@stop
+    @stop

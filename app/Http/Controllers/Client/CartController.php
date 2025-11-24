@@ -30,68 +30,91 @@ class CartController extends Controller
 
     public function addToCart($id)
     {
+        // Lấy size và màu từ request (URL query params)
+        $size = request()->input('size', 'M'); // Mặc định là M nếu không chọn
+        $color = request()->input('color', 'Mặc định');
+
         $product = Product::findOrFail($id);
         $price = $product->price;
         if($product->discount > 0){
             $price = $price - (($price * $product->discount) / 100);
         }
+
+        // --- XỬ LÝ DATABASE (NẾU ĐÃ LOGIN) ---
         if(!empty(Auth::user())){
-            $all = Cart::where('id_user', '=', Auth::user()->id)->get();
-            $quantity = 1;
-            $new = 0;
-            if(count($all) == 0){
-                Cart::create(array('id_product'=>$id, 'name'=>$product->name, 'quantity'=>$quantity, 'image'=>$product->image,
-                    'price'=>$price, 'id_user'=>Auth::user()->id));
-            } else{
-                foreach ($all as $item){
-                    if($item->id_product == $id){
-                        $item->quantity = $item->quantity + 1;
-                        $item->save();
-                        $new = 1;
-                    }
-                }
-                if($new == 0){
-                    Cart::create(array('id_product'=>$id, 'name'=>$product->name, 'quantity'=>$quantity,
-                        'image'=>$product->image,
-                        'price'=>$price,
-                        'id_user'=>Auth::user()->id));
-                }
+            // Tìm sản phẩm trong giỏ có cùng ID, cùng Size và cùng Màu
+            $existingCart = Cart::where('id_user', Auth::user()->id)
+                                ->where('id_product', $id)
+                                ->where('size', $size)
+                                ->where('color', $color)
+                                ->first();
+
+            if($existingCart){
+                // Nếu đã có -> cộng dồn số lượng
+                $existingCart->quantity += 1;
+                $existingCart->save();
+            } else {
+                // Chưa có -> Tạo mới
+                Cart::create([
+                    'id_product' => $id,
+                    'name' => $product->name,
+                    'quantity' => 1,
+                    'image' => $product->image,
+                    'price' => $price,
+                    'id_user' => Auth::user()->id,
+                    'size' => $size,   // Lưu size
+                    'color' => $color  // Lưu màu
+                ]);
             }
         }
 
-
+        // --- XỬ LÝ SESSION (CHO KHÁCH VÃNG LAI HOẶC HIỂN THỊ) ---
         $cart = session()->get('cart', []);
+        
+        // Tạo Key duy nhất cho sản phẩm + biến thể (Ví dụ: 10_L_Red)
+        $cartKey = $id . '_' . $size . '_' . $color;
 
-        if (isset($cart[$id])) {
-            $cart[$id]['quantity']++;
+        if (isset($cart[$cartKey])) {
+            $cart[$cartKey]['quantity']++;
         } else {
-            $cart[$id] = [
+            $cart[$cartKey] = [
+                "id_product" => $id, // Lưu thêm id gốc để dùng khi cần
                 "name" => $product->name,
                 "quantity" => 1,
                 "price" => $price,
-                "image" => $product->image
+                "image" => $product->image,
+                "size" => $size,
+                "color" => $color
             ];
         }
         session()->put('cart', $cart);
+        
         alert()->success('Thông báo!','Thêm sản phẩm vào giỏ hàng thành công!');
         return redirect()->back();
     }
 
     public function update(Request $request)
     {
+        // $request->id bây giờ có thể là cartKey (session) hoặc id trong DB
         if ($request->id && $request->quantity) {
             $cart = session()->get('cart');
+            
+            // Cập nhật Session
             if (isset($cart[$request->id])) {
                 $cart[$request->id]["quantity"] = $request->quantity;
                 session()->put('cart', $cart);
             }
+
+            // Cập nhật Database (Nếu login)
             if(!empty(Auth::user())){
-                $all = Cart::where('id_user', '=', Auth::user()->id)->get();
-                foreach ($all as $item){
-                    if($item->id_product == $request->id){
-                        $item->quantity = $request->quantity;
-                        $item->save();
-                    }
+                // $request->id ở đây nếu gọi từ view có thể là ID của dòng trong bảng Cart
+                // Hoặc chúng ta cần logic tìm kiếm chính xác. 
+                // Để đơn giản cho view hiện tại:
+                // Nếu User login, view sẽ render ID của bảng Cart vào data-id, nên ta tìm theo ID bảng Cart
+                $cartItem = Cart::find($request->id); 
+                if ($cartItem && $cartItem->id_user == Auth::user()->id) {
+                     $cartItem->quantity = $request->quantity;
+                     $cartItem->save();
                 }
             }
             alert()->success('Thông báo!','Cập nhật giỏ hàng thành công!');
@@ -102,18 +125,19 @@ class CartController extends Controller
     {
         if ($request->id) {
             $cart = session()->get('cart');
+            // Xóa Session
             if (isset($cart[$request->id])) {
                 unset($cart[$request->id]);
                 session()->put('cart', $cart);
             }
+
+            // Xóa Database
             if(!empty(Auth::user())){
-                $all = Cart::where('id_user', '=', Auth::user()->id)->get();
-                foreach ($all as $item){
-                    if($item->id_product == $request->id){
-                        $cart = new Cart();
-                        $cart->withTrashed()->where('id_product', $request->id)->forceDelete();
-                    }
-                }
+                // Tìm theo ID chính của bảng cart (được truyền từ view)
+                $cartItem = Cart::find($request->id);
+                 if ($cartItem && $cartItem->id_user == Auth::user()->id) {
+                     $cartItem->forceDelete();
+                 }
             }
             alert()->success('Thông báo!','Xóa sản phẩm thành công!');
         }
@@ -136,54 +160,45 @@ class CartController extends Controller
             'cart' => $cart
         ]);
     }
-public function addWishlist($id)
+    
+    public function addWishlist($id)
     {
-        // Kiểm tra xác thực (thường đã được Middleware 'auth' kiểm tra, nhưng nên đặt kiểm tra Auth::check() ở đầu hàm để xử lý trường hợp không đăng nhập)
         if (!Auth::check()) {
             alert()->error('Thông báo!','Vui lòng đăng nhập để sử dụng tính năng này!');
             return redirect()->back();
         }
 
-        $userId = Auth::id(); // Lấy ID người dùng hiện tại
+        $userId = Auth::id(); 
         $productId = $id;
 
-        // Tối ưu hóa: Dùng first() hoặc exists() để kiểm tra sự tồn tại (hiệu quả hơn get() và duyệt)
         $exists = Wishlist::where('id_user', $userId)
                           ->where('id_product', $productId)
                           ->first();
 
         if ($exists) {
-            // Sản phẩm đã có
             return redirect()->back()->with('status', 'Sản phẩm đã có trong Wishlist của bạn!');
         }
 
-        // Thêm mới sản phẩm
         Wishlist::create([
             'id_product' => $productId,
             'id_user' => $userId,
         ]);
 
-        // Cập nhật session count (nếu cần)
         session()->put('countW', session('countW') + 1);
 
         alert()->success('Thông báo!','Thêm sản phẩm vào Wishlist thành công!');
         return redirect()->back();
     }
 
-    /**
-     * Hiển thị Wishlist. (Đã tối ưu hóa kiểm tra Auth)
-     */
     public function wishlist(){
-        if(Auth::check()){ // Sử dụng Auth::check()
+        if(Auth::check()){
             $categories = new Category();
             $cate = $categories->all(array('name', 'id'));
 
-            // Dùng Auth::id() thay cho Auth::user()->id
             $list = Wishlist::where('id_user', '=', Auth::id())->get();
 
             $wishlist = [];
             foreach ($list as $item){
-                // Product::find($item->id_product) là cách đúng
                 $wishlist[$item->id] = Product::find($item->id_product);
             }
 
@@ -198,13 +213,8 @@ public function addWishlist($id)
         }
     }
 
-    /**
-     * Xóa sản phẩm khỏi Wishlist.
-     */
     public function wishlistRemove($id){
-        // Kiểm tra xem người dùng có được phép xóa item này không (nên thêm Auth::id() vào điều kiện)
         if (Auth::check()) {
-            // Đảm bảo chỉ xóa item của chính người dùng
             Wishlist::where('id', '=', $id)
                     ->where('id_user', '=', Auth::id())
                     ->forceDelete();
@@ -213,7 +223,7 @@ public function addWishlist($id)
             alert()->success('Thông báo!','Xóa sản phẩm trong wishlist thành công!');
             return redirect()->back();
         }
-        return redirect()->back(); // Hoặc chuyển hướng đến trang đăng nhập nếu chưa đăng nhập
+        return redirect()->back(); 
     }
 
     public function payment(Request $request){
@@ -229,6 +239,7 @@ public function addWishlist($id)
         ];
         session()->put('order', $order);
 
+        // THANH TOÁN COD
         if($request->input('order') == 1){
             $order = session()->get('order');
             $name = $order['name'];
@@ -263,31 +274,45 @@ public function addWishlist($id)
                         )
                     );
             if ($bill_ID) {
-                $cart = session()->get('cart', []);
-                $detail_bill = new Detail_Bill();
-                foreach ($cart as $item) {
-                    Detail_Bill::create(array(
-                            'name' => $item['name'],
-                            'quantity' => $item['quantity'],
-                            'price' => $item['price'],
-                            'image' => $item['image'],
-                            'id_order' => $id_order
-                        )
-                    );
-                }
-                foreach (session()->get('cart') as $key => $item) {
-                    unset($cart[$key]);
-                    session()->put('cart', $cart);
-                }
-                if(!empty(Auth::user())) {
-                    $delete_cart = Cart::where('id_user', '=', Auth::user()->id)->get();
-                    foreach ($delete_cart as $item) {
-                        $cart = new Cart();
-                        $cart->withTrashed()->where('id_product', $item->id_product)->forceDelete();
+                // Lấy dữ liệu giỏ hàng để lưu chi tiết
+                // Ưu tiên lấy từ DB nếu đăng nhập để chính xác nhất
+                if(!empty(Auth::user())){
+                     $cartItems = Cart::where('id_user', Auth::user()->id)->get();
+                     foreach ($cartItems as $item) {
+                        Detail_Bill::create(array(
+                                'name' => $item->name,
+                                'quantity' => $item->quantity,
+                                'price' => $item->price,
+                                'image' => $item->image,
+                                'id_order' => $id_order,
+                                'size' => $item->size,   // Lưu size
+                                'color' => $item->color  // Lưu color
+                            )
+                        );
+                    }
+                    // Xóa giỏ DB
+                    Cart::where('id_user', Auth::user()->id)->forceDelete();
+
+                } else {
+                    // Lấy từ Session
+                    $cart = session()->get('cart', []);
+                    foreach ($cart as $item) {
+                        Detail_Bill::create(array(
+                                'name' => $item['name'],
+                                'quantity' => $item['quantity'],
+                                'price' => $item['price'],
+                                'image' => $item['image'],
+                                'id_order' => $id_order,
+                                'size' => isset($item['size']) ? $item['size'] : 'N/A',
+                                'color' => isset($item['color']) ? $item['color'] : 'N/A'
+                            )
+                        );
                     }
                 }
-                $categories = new Category();
-                $data = $categories->all(array('name', 'id'));
+
+                // Xóa Session Cart
+                session()->forget('cart');
+
                 $data_detail_bill = Detail_Bill::where('id_order', '=', $id_order)->get();
                 $data_bill = Bill::where('id_order', '=', $id_order)->get();
                 Mail::to($request->input('email'))->send(new OrderMail($data_bill, $data_detail_bill));
@@ -298,29 +323,21 @@ public function addWishlist($id)
                 ]);
             }
         }else{
-
+            // THANH TOÁN VNPAY (GIỮ NGUYÊN CODE CŨ)
             $total_price = $request->input('total');
             $price_to_pay = $total_price * 10;
             error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
-
-            // config.php
-            $vnp_TmnCode = "ZVYN925E"; //Mã website tại VNPAY
-            $vnp_HashSecret = "TJAPLVJKGQGEAKISHNHFBREVGCWMLWCW"; //Chuỗi bí mật
+            $vnp_TmnCode = "ZVYN925E"; 
+            $vnp_HashSecret = "TJAPLVJKGQGEAKISHNHFBREVGCWMLWCW"; 
             $vnp_Url = "http://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
             $vnp_Returnurl = "http://127.0.0.1:8000/return";
-
-
-            // end config.php
-
-            $vnp_TxnRef = date("YmdHis"); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+            $vnp_TxnRef = date("YmdHis"); 
             $vnp_OrderInfo = 'Thanh toán đơn hàng';
             $vnp_OrderType = 'billpayment';
             $vnp_Amount = $total_price * 100000;
             $vnp_Locale = 'vn';
             $vnp_BankCode = 'NCB';
             $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
-
-
             $inputData = array(
                 "vnp_Version" => "2.0.0",
                 "vnp_TmnCode" => $vnp_TmnCode,
@@ -335,7 +352,6 @@ public function addWishlist($id)
                 "vnp_ReturnUrl" => $vnp_Returnurl,
                 "vnp_TxnRef" => $vnp_TxnRef,
             );
-
             if (isset($vnp_BankCode) && $vnp_BankCode != "") {
                 $inputData['vnp_BankCode'] = $vnp_BankCode;
             }
@@ -352,19 +368,18 @@ public function addWishlist($id)
                 }
                 $query .= urlencode($key) . "=" . urlencode($value) . '&';
             }
-
             $vnp_Url = $vnp_Url . "?" . $query;
             if (isset($vnp_HashSecret)) {
-                // $vnpSecureHash = md5($vnp_HashSecret . $hashdata);
                 $vnpSecureHash = hash('sha256', $vnp_HashSecret . $hashdata);
                 $vnp_Url .= 'vnp_SecureHashType=SHA256&vnp_SecureHash=' . $vnpSecureHash;
             }
-            // var_dump($vnp_Url);
             return redirect($vnp_Url);
         }
-
     }
+
     public function return(){
+        // XỬ LÝ TRẢ VỀ VNPAY
+        // Logic tương tự Payment COD: Cần thêm size/color vào Detail_Bill
         $order = session()->get('order');
         $name = $order['name'];
         $email = $order['email'];
@@ -375,9 +390,7 @@ public function addWishlist($id)
         $payment_status = 'Đã thanh toán';
         $delivery_status = 'Chưa giao hàng';
         $price_to_pay = $order['total'];
-        $discount_price = 0;
-        $payments = 'online';
-        $status = 'pending';
+        
         $vnp_ResponseCode = $_GET['vnp_ResponseCode'];
         if ($vnp_ResponseCode == 00) {
             $bill = new Bill();
@@ -387,8 +400,7 @@ public function addWishlist($id)
             if(!empty(Auth::user())) {
                 $id_user = Auth::user()->id;
             }
-            $bill_ID =
-                Bill::create(array(
+            $bill_ID = Bill::create(array(
                         'id_order'=>$id_order,
                         'name'=>$name,
                         'email'=>$email,
@@ -400,38 +412,44 @@ public function addWishlist($id)
                         'payment_status'=>$payment_status,
                         'delivery_status'=>$delivery_status,
                         'id_user'=>$id_user,
-                    )
-                );
-            // var_dump($insert_bill);
-            if ($bill_ID) {
-                $cart = session()->get('cart', []);
-                $detail_bill = new Detail_Bill();
+                    ));
 
-                foreach ($cart as $item) {
-                    Detail_Bill::create(array(
-                            'name'=>$item['name'],
-                            'quantity'=>$item['quantity'],
-                            'price'=>$item['price'],
-                            'image'=>$item['image'],
-                            'id_order'=>$id_order
-                        )
-                    );
-                }
-                foreach(session()->get('cart') as $key=>$item) {
-                    unset($cart[$key]);
-                    session()->put('cart', $cart);
-                }
+            if ($bill_ID) {
+                // LƯU CHI TIẾT
                 if(!empty(Auth::user())){
-                    $delete_cart = Cart::where('id_user', '=', Auth::user()->id)->get();
-                    foreach ($delete_cart as $item){
-                        $cart = new Cart();
-                        $cart->withTrashed()->where('id_product', $item->id_product)->forceDelete();
+                     $cartItems = Cart::where('id_user', Auth::user()->id)->get();
+                     foreach ($cartItems as $item) {
+                        Detail_Bill::create(array(
+                                'name' => $item->name,
+                                'quantity' => $item->quantity,
+                                'price' => $item->price,
+                                'image' => $item->image,
+                                'id_order' => $id_order,
+                                'size' => $item->size,
+                                'color' => $item->color
+                            )
+                        );
+                    }
+                    Cart::where('id_user', Auth::user()->id)->forceDelete();
+                } else {
+                    $cart = session()->get('cart', []);
+                    foreach ($cart as $item) {
+                        Detail_Bill::create(array(
+                                'name'=>$item['name'],
+                                'quantity'=>$item['quantity'],
+                                'price'=>$item['price'],
+                                'image'=>$item['image'],
+                                'id_order'=>$id_order,
+                                'size' => isset($item['size']) ? $item['size'] : 'N/A',
+                                'color' => isset($item['color']) ? $item['color'] : 'N/A'
+                            )
+                        );
                     }
                 }
+                session()->forget('cart');
+
                 $categories = new Category();
                 $data = $categories->all(array('name', 'id'));
-                $data_detail_bill = Detail_Bill::where('id_order', '=', $id_order)->get();
-                $data_bill = Bill::where('id_order', '=', $id_order)->get();
                 $data_detail_bill = Detail_Bill::where('id_order', '=', $id_order)->get();
                 $data_bill = Bill::where('id_order', '=', $id_order)->get();
                 Mail::to($email)->send(new OrderMail($data_bill, $data_detail_bill));
@@ -440,28 +458,15 @@ public function addWishlist($id)
                     'detail_bill'=>$data_detail_bill,
                     'bill' => $data_bill,
                     'categories' => $data,
-//                    'message'=>'Đặt hàng và thanh toán thành công!'
                 ]);
             } else {
-                $categories = new Category();
-                $data = $categories->all(array('name', 'id'));
                 alert()->success('Thông báo!','Đặt hàng và thanh toán thất bại!');
                 return redirect('/cart');
-//                return view('/client/cart/cart', [
-//                    'categories' => $data,
-//                    'message'=>'Đặt hàng và thanh toán thất bại!'
-//                ]);
             }
         }
         else {
-            $categories = new Category();
-            $data = $categories->all(array('name', 'id'));
             alert()->success('Thông báo!','Đặt hàng và thanh toán thất bại!');
             return redirect('/cart');
-//            return view('/client/cart/cart', [
-//                'categories' => $data,
-//                'message'=>'Thanh toán thất bại!'
-//            ]);
         }
     }
 }

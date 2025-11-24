@@ -11,11 +11,14 @@ class Detail_Bill extends Model
     use SoftDeletes, HasFactory;
     protected $primaryKey = 'id';
     protected $table = 'detail_bill';
+    // Đã thêm 'size', 'color'
     protected $fillable = [
         'name',
         'quantity',
         'price',
         'image',
-        'id_order'
+        'id_order',
+        'size',
+        'color'
     ];
 }

@@ -2,7 +2,6 @@
 @section('title', 'Hafos - Chi tiết đơn hàng')
 
 @section('client')
-    <!-- Breadcrumb Section Begin -->
     <section class="breadcrumb-section set-bg" data-setbg="{{URL::asset('img/breadcrumb.jpg')}}">
         <div class="container">
             <div class="row">
@@ -18,7 +17,6 @@
             </div>
         </div>
     </section>
-    <!-- Breadcrumb Section End -->
     @if(Auth::user())
         <div class="container bootstrap snippets bootdey mb-5">
             <div class="row">
@@ -78,20 +76,32 @@
                                         <td>Email: <strong> {{ $history[0]->email }}</strong></td>
                                     </tr>
                                 </table>
-                                <table>
-                                    <tr>
-                                        <th colspan="3">Thông tin đơn hàng:</th>
-                                    </tr>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Sản phẩm</th>
+                                            <th>Size</th>
+                                            <th>Màu</th>
+                                            <th>Số lượng</th>
+                                            <th>Đơn giá</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
                                     @foreach($history_detail as $order)
                                         <tr>
-                                            <td>Sản phẩm: <strong>{{ $order->product_name }}</strong></td>
-                                            <td>Số lượng: <strong>{{ $order->quantity}}</strong></td>
-                                            <td>Đơn giá: <strong>{{ number_format($order->price,3,".",".") }} đ</strong></td>
+                                            <td><strong>{{ $order->name }}</strong></td> <td>{{ $order->size }}</td>
+                                            <td>{{ $order->color }}</td>
+                                            <td>{{ $order->quantity}}</td>
+                                            <td>{{ number_format($order->price,3,".",".") }} đ</td>
                                         </tr>
                                     @endforeach
-                                    <tr class="back-color">
-                                        <td colspan="3"><strong>Tổng tiền: {{  number_format($history[0]->total,3,".",".") }} đ</strong></td>
-                                    </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="back-color">
+                                            <td colspan="4" class="text-right"><strong>Tổng tiền:</strong></td>
+                                            <td><strong>{{ number_format($history[0]->total,3,".",".") }} đ</strong></td>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
                         </div>
