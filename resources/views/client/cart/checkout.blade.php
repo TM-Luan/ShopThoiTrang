@@ -350,11 +350,11 @@
                                         @php $total += $item->price * $item->quantity @endphp
                                         @php $count += $item->quantity @endphp
                                         <li><span>{!! \Illuminate\Support\Str::limit($item->name, $limit = 20, $end = '...')!!}</span>
-                                            <span>{{ number_format($item->price,3,".",".") }} đ</span></li>
+                                            <span>{{ number_format($item->price,0,".",".") }} đ</span></li>
                                     @endforeach
                                 </ul>
                                 <div class="checkout__order__subtotal">Phí giao hàng <span>0</span></div>
-                                <div class="checkout__order__total">Tổng <span>{{ number_format($total,3,".",".") }} đ</span></div>
+                                <div class="checkout__order__total">Tổng <span>{{ number_format($total,0,".",".") }} đ</span></div>
                             @elseif(!$cart && session('cart') )
                             <div class="checkout__order__products">Sản phẩm <span>Tổng</span></div>
                             <ul>
@@ -362,12 +362,12 @@
                                     @php $total += $details['price'] * $details['quantity'] @endphp
                                     @php $count += $details['quantity'] @endphp
 
-                                <li><span>{!! \Illuminate\Support\Str::limit($details['name'], $limit = 20, $end = '...')!!}</span> <span>{{ number_format($details['price'],3,".",".") }} đ</span></li>
+                                <li><span>{!! \Illuminate\Support\Str::limit($details['name'], $limit = 20, $end = '...')!!}</span> <span>{{ number_format($details['price'],0,".",".") }} đ</span></li>
                                 @endforeach
 
                             </ul>
                             <div class="checkout__order__subtotal">Phí giao hàng <span>0</span></div>
-                            <div class="checkout__order__total">Tổng <span>{{ number_format($total,3,".",".") }} đ</span></div>
+                            <div class="checkout__order__total">Tổng <span>{{ number_format($total,0,".",".") }} đ</span></div>
 
                             @endif
                         </div>

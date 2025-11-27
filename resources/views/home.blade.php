@@ -83,12 +83,12 @@
                                                 <?php
                                 $discount_price = $outstanding->price - ($outstanding->price * ($outstanding->discount / 100));
                                                                                 ?>
-                                                <h5 class="product__item__price">{{ number_format($discount_price, 3, ".", ".") }} ₫<span
+                                                <h5 class="product__item__price">{{ number_format($discount_price, 0, ".", ".") }} ₫<span
                                                         class="pl-2"
-                                                        style="text-decoration: line-through;color: #b2b2b2;font-weight: normal;">{{ number_format($outstanding->price, 3, ".", ".") }}
+                                                        style="text-decoration: line-through;color: #b2b2b2;font-weight: normal;">{{ number_format($outstanding->price, 0, ".", ".") }}
                                                         ₫</span></h5>
                             @else
-                                <h5>{{ number_format($outstanding->price, 3, ".", ".") }} ₫</h5>
+                                <h5>{{ number_format($outstanding->price, 0, ".", ".") }} ₫</h5>
                             @endif
                         </div>
                     </div>
@@ -146,8 +146,8 @@
                                             <?php
                     $discount_price = $discount->price - ($discount->price * ($discount->discount / 100));
                                                                 ?>
-                                            <div class="product__item__price">{{ number_format($discount_price, 3, ".", ".") }}
-                                                ₫<span>{{ number_format($discount->price, 3, ".", ".") }} ₫</span></div>
+                                            <div class="product__item__price">{{ number_format($discount_price, 0, ".", ".") }}
+                                                ₫<span>{{ number_format($discount->price, 0, ".", ".") }} ₫</span></div>
                                         </div>
                                     </div>
                                 </div>

@@ -325,7 +325,7 @@ class CartController extends Controller
         }else{
             // THANH TOÁN VNPAY (GIỮ NGUYÊN CODE CŨ)
             $total_price = $request->input('total');
-            $price_to_pay = $total_price * 10;
+            $price_to_pay = $total_price;
             error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
             $vnp_TmnCode = "Y3JAV9YH"; 
             $vnp_HashSecret = "MNI1M78XUUZ7K3FIFTBJX9XW4CVJ4WRI"; 
@@ -334,7 +334,7 @@ class CartController extends Controller
             $vnp_TxnRef = date("YmdHis"); 
             $vnp_OrderInfo = 'Thanh toán đơn hàng';
             $vnp_OrderType = 'billpayment';
-            $vnp_Amount = $total_price * 100000;
+            $vnp_Amount = $total_price * 100;
             $vnp_Locale = 'vn';
             $vnp_BankCode = 'NCB';
             $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];

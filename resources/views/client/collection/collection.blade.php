@@ -152,7 +152,7 @@ for ($i = 3; $i <= 5; $i++) {
                                             </div>
                                             <div class="latest-product__item__text">
                                                 <h6>{{ $new_item1->name }}</h6>
-                                                <span>{{ number_format($new_item1->price, 3, ".", ".") }} ₫</span>
+                                                <span>{{ number_format($new_item1->price, 0, ".", ".") }} ₫</span>
                                             </div>
                                         </a>
                                     @endforeach
@@ -165,7 +165,7 @@ for ($i = 3; $i <= 5; $i++) {
                                             </div>
                                             <div class="latest-product__item__text">
                                                 <h6>{{ $new_item2->name }}</h6>
-                                                <span>{{ number_format($new_item2->price, 3, ".", ".") }} ₫</span>
+                                                <span>{{ number_format($new_item2->price, 0, ".", ".") }} ₫</span>
                                             </div>
                                         </a>
                                     @endforeach
@@ -204,8 +204,8 @@ for ($i = 3; $i <= 5; $i++) {
                                 $discount_price = $discount->price - ($discount->price * ($discount->discount / 100));
                                                                                                 ?>
                                                                     <div class="product__item__price">
-                                                                        {{ number_format($discount_price, 3, ".", ".") }}
-                                                                        ₫<span>{{ number_format($discount->price, 3, ".", ".") }} ₫</span></div>
+                                                                        {{ number_format($discount_price, 0, ".", ".") }}
+                                                                        ₫<span>{{ number_format($discount->price, 0, ".", ".") }} ₫</span></div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -263,12 +263,12 @@ for ($i = 3; $i <= 5; $i++) {
                                                                 <?php
                                         $discount_price = $pro->price - ($pro->price * ($pro->discount / 100));
                                                                                                     ?>
-                                                                <h5 class="product__item__price">{{ number_format($discount_price, 3, ".", ".") }}
+                                                                <h5 class="product__item__price">{{ number_format($discount_price, 0, ".", ".") }}
                                                                     ₫<span class="pl-2"
-                                                                        style="text-decoration: line-through;color: #b2b2b2;font-weight: normal;">{{ number_format($pro->price, 3, ".", ".") }}
+                                                                        style="text-decoration: line-through;color: #b2b2b2;font-weight: normal;">{{ number_format($pro->price, 0, ".", ".") }}
                                                                         ₫</span></h5>
                                     @else
-                                        <h5>{{ number_format($pro->price, 3, ".", ".") }} ₫</h5>
+                                        <h5>{{ number_format($pro->price, 0, ".", ".") }} ₫</h5>
                                     @endif
                                 </div>
                             </div>

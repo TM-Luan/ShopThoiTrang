@@ -345,7 +345,7 @@ $first_part = $components[1];
                                                 </div>
                                             @endforeach
                                             <div class="col-lg-12 col-sm-12 col-12" >
-                                                <p>Tổng tiền: <span class="text-danger font-weight-bold">{{ number_format($total,3,".",".") }} ₫</span></p>
+                                                <p>Tổng tiền: <span class="text-danger font-weight-bold">{{ number_format($total,0,".",".") }} ₫</span></p>
 
                                             </div>
                                             <div class="view-cart">

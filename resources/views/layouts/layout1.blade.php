@@ -341,13 +341,13 @@
                                                     </div>
                                                     <div class="col-lg-8 col-sm-8 col-8 cart-detail-product m-0 p-0">
                                                         <p class="m-0">{{ $details['name'] }}</p>
-                                                        <p class="m-0"> Giá: {{ number_format($details['price'],3,".",".") }} ₫</p>
+                                                        <p class="m-0"> Giá: {{ number_format($details['price'],0,".",".") }} ₫</p>
                                                         <p class="m-0"> SL:{{ $details['quantity'] }}</p>
                                                     </div>
                                                 </div>
                                             @endforeach
                                             <div class="col-lg-12 col-sm-12 col-12" >
-                                                <p>Tổng tiền: <span class="text-danger font-weight-bold">{{ number_format($total,3,".",".") }} ₫</span></p>
+                                                <p>Tổng tiền: <span class="text-danger font-weight-bold">{{ number_format($total,0,".",".") }} ₫</span></p>
                                             </div>
                                             <div class="view-cart">
                                                 <a href="/cart">Xem giỏ hàng</a>

@@ -48,13 +48,13 @@
                                 <?php
                                 $discount_price = $product->price - ($product->price * ($product->discount / 100));
                                 ?>
-                            <span class="product__details__price">{{ number_format($discount_price, 3, ".", ".") }} ₫</span>
+                            <span class="product__details__price">{{ number_format($discount_price, 0, ".", ".") }} ₫</span>
                             <span class="pl-3"
                                   style="text-decoration: line-through;color: #b2b2b2;font-size: 20px">{{ number_format($product->price, 0, ".", ".") }}
                                             ₫</span>
                         @else
                          
-                            <span class="product__details__price">{{ number_format($product->price, 3, ".", ".") }} ₫</span>
+                            <span class="product__details__price">{{ number_format($product->price, 0, ".", ".") }} ₫</span>
                         @endif
 
                         <p>{{ $product->short_description }}</p>
@@ -225,12 +225,12 @@
                                             <?php
                                             $discount_price = $rel->price - ($rel->price * ($rel->discount / 100));
                                             ?>
-                                        <h5 class="product__item__price">{{ number_format($discount_price, 3, ".", ".") }} ₫<span
+                                        <h5 class="product__item__price">{{ number_format($discount_price, 0, ".", ".") }} ₫<span
                                                 class="pl-2"
                                                 style="text-decoration: line-through;color: #b2b2b2;font-weight: normal;">{{ number_format($rel->price, 0, ".", ".") }}
                                                             ₫</span></h5>
                                     @else
-                                        <h5>{{ number_format($rel->price, 3, ".", ".") }} ₫</h5>
+                                        <h5>{{ number_format($rel->price, 0, ".", ".") }} ₫</h5>
                                     @endif
 
                                 </div>

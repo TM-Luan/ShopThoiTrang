@@ -37,7 +37,7 @@
                                         <td></td>
                                         <td>{{$bill->id}}</td>
                                         <td>{{$bill->name}}</td>
-                                        <td>{{ number_format($bill->total,3,".",".") }} đ</td>
+                                        <td>{{ number_format($bill->total,0,".",".") }} đ</td>
                                         <td>{{$bill->created_at}}</td>
                                         <td>{{$bill->count}}</td>
                                         <td>{{$bill->payment_status}}</td>

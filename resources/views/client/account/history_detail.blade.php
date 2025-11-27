@@ -92,14 +92,14 @@
                                             <td><strong>{{ $order->name }}</strong></td> <td>{{ $order->size }}</td>
                                             <td>{{ $order->color }}</td>
                                             <td>{{ $order->quantity}}</td>
-                                            <td>{{ number_format($order->price,3,".",".") }} đ</td>
+                                            <td>{{ number_format($order->price,0,".",".") }} đ</td>
                                         </tr>
                                     @endforeach
                                     </tbody>
                                     <tfoot>
                                         <tr class="back-color">
                                             <td colspan="4" class="text-right"><strong>Tổng tiền:</strong></td>
-                                            <td><strong>{{ number_format($history[0]->total,3,".",".") }} đ</strong></td>
+                                            <td><strong>{{ number_format($history[0]->total,0,".",".") }} đ</strong></td>
                                         </tr>
                                     </tfoot>
                                 </table>

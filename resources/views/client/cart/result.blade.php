@@ -43,15 +43,15 @@
                                             @php $count += $details->quantity @endphp
                                         <tr class="tr-border-bottom">
                                             <td><span>{{$details->name}}</span></td>
-                                            <td><span>{{ number_format($details->price,3,".",".") }} đ</span></td>
+                                            <td><span>{{ number_format($details->price,0,".",".") }} đ</span></td>
                                             <td style="padding-left: 15px;"><span>{{$details->quantity}}</span></td>
-                                            <td><span>{{ number_format(($details->price*$details->quantity),3,".",".") }} đ</span></td>
+                                            <td><span>{{ number_format(($details->price*$details->quantity), 0,".",".") }} đ</span></td>
                                         </tr>
                                         @endforeach
                                     </table>
                                     <div class="checkout__order__subtotal" style="border-bottom: none;margin-bottom: 0;">Tổng số lượng sản phẩm: <span>{{ $count }}</span></div>
                                     <div class="checkout__order__subtotal">Phí giao hàng: <span>0</span></div>
-                                    <div class="checkout__order__total" style="padding-top: 15px;">Tổng tiền đơn hàng<span>{{ number_format($total,3,".",".") }} đ</span></div>
+                                    <div class="checkout__order__total" style="padding-top: 15px;">Tổng tiền đơn hàng<span>{{ number_format($total,0,".",".") }} đ</span></div>
 {{--                                    <button type="submit" class="site-btn">ĐẶT HÀNG</button>--}}
                                     <a href="/collection" class="btn btn-success">Tiếp tục mua hàng</a>
                                     @if(!empty(Auth::user()))

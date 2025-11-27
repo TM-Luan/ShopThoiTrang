@@ -53,11 +53,11 @@
                                                 <p>Size: <strong>{{ $details->size }}</strong></p>
                                                 <p>Màu: <strong>{{ $details->color }}</strong></p>
                                             </td>
-                                            <td data-th="Price">{{ number_format($details->price,3,".",".") }} ₫</td>
+                                            <td data-th="Price">{{ number_format($details->price,0,".",".") }} ₫</td>
                                             <td data-th="Quantity">
                                                 <input type="number" min="1" value="{{ $details->quantity }}" class="form-control quantity update-cart" style="width: 60px;margin: 0 auto;"/>
                                             </td>
-                                            <td data-th="Subtotal" class="text-center">{{ number_format($details->price * $details->quantity,3,".",".") }} ₫</td>
+                                            <td data-th="Subtotal" class="text-center">{{ number_format($details->price * $details->quantity,0,".",".") }} ₫</td>
                                             <td class="actions" data-th="">
                                                 <button class="btn btn-danger btn-sm remove-from-cart"><i class="fa fa-close"></i></button>
                                             </td>
@@ -131,7 +131,7 @@
                         <ul>
                             <li>Tổng sản phẩm <span>{{ $count }}</span></li>
                             <li>Phí giao hàng <span>0 đ</span></li>
-                            <li>Tổng <span>{{ number_format($total,3,".",".") }} đ</span></li>
+                            <li>Tổng <span>{{ number_format($total,0,".",".") }} đ</span></li>
                         </ul>
                         <a href="/checkout" class="primary-btn">THANH TOÁN</a>
                     </div>

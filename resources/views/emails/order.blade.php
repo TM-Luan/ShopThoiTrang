@@ -81,7 +81,7 @@
                         <td>{{ $item->size }}</td>
                         <td>{{ $item->color }}</td>
                         <td>{{ $item->quantity }}</td>
-                        <td>{{ number_format($item->price, 3, ',', '.') }} đ</td>
+                        <td>{{ number_format($item->price, 0, ',', '.') }} đ</td>
                     </tr>
                     <?php endforeach; ?>
                 </tbody>
