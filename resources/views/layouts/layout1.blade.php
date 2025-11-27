@@ -395,11 +395,11 @@
             <div class="col-lg-9">
                 <div class="hero__search">
                     <div class="hero__search__form">
-                        <form action="#">
-                            <div class="hero__search__categories">
+                        <form action="/collection">
+                            <!-- <div class="hero__search__categories">
                                 Tất cả
                                 <i class="fa fa-angle-down angle-down-special"></i>
-                            </div>
+                            </div> -->
                             <input type="text" placeholder="Bạn cần tìm gì?">
                             <button type="submit" class="site-btn">Tìm kiếm</button>
                         </form>

@@ -393,14 +393,14 @@ $first_part = $components[1];
             <div class="col-lg-9">
                 <div class="hero__search">
                     <div class="hero__search__form">
-                        <form action="#">
-                            <div class="hero__search__categories">
-                                Tất cả
-                                <i class="fa fa-angle-down angle-down-special"></i>
-                            </div>
-                            <input type="text" placeholder="Bạn cần tìm gì?">
-                            <button type="submit" class="site-btn">TÌM KIẾM</button>
-                        </form>
+                        <form action="/collection" method="GET">
+    <!-- <div class="hero__search__categories">
+        Tất cả
+        <i class="fa fa-angle-down angle-down-special"></i>
+    </div> -->
+    <input type="text" name="search" placeholder="Bạn cần tìm gì?" value="{{ request('search') }}">
+    <button type="submit" class="site-btn">TÌM KIẾM</button>
+</form>
                     </div>
                     <div class="hero__search__phone">
                         <div class="hero__search__phone__icon">

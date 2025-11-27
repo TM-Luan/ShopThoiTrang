@@ -45,7 +45,7 @@
                             @endforeach
                         </div>
                     </div>
-                    <div class="blog__sidebar__item">
+                    <!-- <div class="blog__sidebar__item">
                         <h4>Tags</h4>
                         <div class="blog__sidebar__item__tags">
                             <a href="#">Intuos</a>
@@ -55,7 +55,7 @@
                             <a href="#">MobileStudio Pro</a>
                             <a href="#">SmartPads</a>
                         </div>
-                    </div>
+                    </div> -->
                 </div> </div>
             
             <div class="col-lg-8 col-md-7">
