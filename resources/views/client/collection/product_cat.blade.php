@@ -59,55 +59,34 @@
                                     <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
                                 </div>
                                 <div class="range-slider">
-  <div class="range-slider">
-    <div class="price-input">
-        <form action="/collection" method="GET" onsubmit="return validatePriceFilter()">
-            @if(request('search'))
-                <input type="hidden" name="search" value="{{ request('search') }}">
-            @endif
+                                    <div class="price-input">
+                                        <form action="/product-cat/{{ request()->route('id') }}" method="GET" onsubmit="return validatePriceFilter()">
+                                            @if(request('search'))
+                                                <input type="hidden" name="search" value="{{ request('search') }}">
+                                            @endif
 
-            <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 15px; gap: 10px;">
-                <input type="text" id="minamount" 
-                       style="width: auto; min-width: 80px; text-align: center; border: 1px solid #ccc; padding: 5px; border-radius: 4px;"
-                       value="{{ number_format(request('min', 0), 0, '.', '.') }}đ">
-                
-                <span style="color: #666; font-weight: bold;">-</span>
-                
-                <input type="text" id="maxamount" 
-                       style="width: auto; min-width: 80px; text-align: center; border: 1px solid #ccc; padding: 5px; border-radius: 4px;"
-                       value="{{ number_format(request('max', $max_price ?? 5000000), 0, '.', '.') }}đ">
-            </div>
-            
-            <input type="hidden" name="min" id="hidden_min" value="{{ request('min', 0) }}">
-            <input type="hidden" name="max" id="hidden_max" value="{{ request('max', $max_price ?? 5000000) }}">
-            
-            <button type="submit" class="site-btn" style="width: 100%;">LỌC GIÁ</button>
-        </form>
-    </div>
-</div>
+                                            <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 15px; gap: 10px;">
+                                                <input type="text" id="minamount" 
+                                                       style="width: auto; min-width: 80px; text-align: center; border: 1px solid #ccc; padding: 5px; border-radius: 4px;"
+                                                       value="{{ number_format(request('min', 0), 0, '.', '.') }}đ">
+                                                
+                                                <span style="color: #666; font-weight: bold;">-</span>
+                                                
+                                                <input type="text" id="maxamount" 
+                                                       style="width: auto; min-width: 80px; text-align: center; border: 1px solid #ccc; padding: 5px; border-radius: 4px;"
+                                                       value="{{ number_format(request('max', $max_price ?? 5000000), 0, '.', '.') }}đ">
+                                            </div>
+                                            
+                                            <input type="hidden" name="min" id="hidden_min" value="{{ request('min', 0) }}">
+                                            <input type="hidden" name="max" id="hidden_max" value="{{ request('max', $max_price ?? 5000000) }}">
+                                            
+                                            <button type="submit" class="site-btn" style="width: 100%;">LỌC GIÁ</button>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <!-- <div class="sidebar__item sidebar__item__color--option">
-                            <h4>Màu sắc</h4>
-                            <div class="sidebar__item__color sidebar__item__color--white">
-                                <label for="white">Trắng <input type="radio" id="white"></label>
-                            </div>
-                            <div class="sidebar__item__color sidebar__item__color--gray">
-                                <label for="gray">Xám <input type="radio" id="gray"></label>
-                            </div>
-                            <div class="sidebar__item__color sidebar__item__color--red">
-                                <label for="red">Đỏ <input type="radio" id="red"></label>
-                            </div>
-                            <div class="sidebar__item__color sidebar__item__color--black">
-                                <label for="black">Đen <input type="radio" id="black"></label>
-                            </div>
-                            <div class="sidebar__item__color sidebar__item__color--blue">
-                                <label for="blue">Xanh dương <input type="radio" id="blue"></label>
-                            </div>
-                            <div class="sidebar__item__color sidebar__item__color--green">
-                                <label for="green">Xanh lá <input type="radio" id="green"></label>
-                            </div>
-                        </div> -->
+
                         <div class="sidebar__item">
                             <div class="latest-product__text">
                                 <h4>Sản phẩm mới</h4>
@@ -132,6 +111,7 @@
                         </div>
                     </div>
                 </div>
+                
                 <div class="col-lg-9 col-md-7">
                     <div class="section-title product__discount__title">
                         <h2>Sản phẩm: {{ $nameCat }}</h2>
@@ -183,8 +163,8 @@
             </div>
         </div>
     </section>
+
 <script>
-    // Hàm xử lý trước khi gửi form (Giữ nguyên logic cũ)
     function validatePriceFilter() {
         var minInput = document.getElementById('minamount');
         var maxInput = document.getElementById('maxamount');
@@ -227,11 +207,8 @@
             return parseInt(str.toString().replace(/[^0-9]/g, '')) || 0;
         }
 
-        // --- HÀM MỚI: TỰ ĐỘNG CHỈNH KÍCH THƯỚC INPUT ---
         function autoResizeInput(inputJquery) {
-            // Lấy độ dài chuỗi ký tự (cộng thêm 2 ký tự để dư ra chút xíu cho đẹp)
             var len = inputJquery.val().length + 2;
-            // Set width theo đơn vị 'ch' (chiều rộng của ký tự số 0)
             inputJquery.css('width', len + 'ch');
         }
 
@@ -241,17 +218,13 @@
             max: maxPrice,
             values: [currentMin, currentMax],
             slide: function (event, ui) {
-                // Cập nhật giá trị
                 minamount.val(formatCurrency(ui.values[0]));
                 maxamount.val(formatCurrency(ui.values[1]));
-                
-                // Gọi hàm resize ngay khi kéo
                 autoResizeInput(minamount);
                 autoResizeInput(maxamount);
             }
         });
 
-        // Xử lý sự kiện nhập tay
         minamount.on('input focus blur', function() { autoResizeInput($(this)); });
         maxamount.on('input focus blur', function() { autoResizeInput($(this)); });
 
@@ -267,7 +240,6 @@
             autoResizeInput($(this)); 
         });
 
-        // Chạy lần đầu khi load trang
         autoResizeInput(minamount);
         autoResizeInput(maxamount);
     });

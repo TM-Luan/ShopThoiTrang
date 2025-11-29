@@ -71,37 +71,39 @@ class ProductsController extends Controller
     // 2. Lấy thông tin danh mục hiện tại
     $name_cat = Category::find($id);
     
+    // --- BỔ SUNG: Lấy giá cao nhất để dùng cho thanh trượt ---
+    $max_price = Product::max('price'); 
+    $max_price = $max_price ? $max_price : 5000000;
+    // --------------------------------------------------------
+    
     // 3. Khởi tạo query: Chỉ lấy sản phẩm thuộc danh mục này
     $query = Product::where('catalog_id', '=', $id);
 
     // --- LOGIC TÌM KIẾM & LỌC ---
-    
-    // Tìm kiếm theo tên (nếu có tham số search)
     if ($request->has('search') && $request->search != null) {
         $query->where('name', 'like', '%' . $request->search . '%');
     }
 
-    // Lọc theo giá (nếu có min và max)
     if ($request->has('min') && $request->has('max')) {
         $min_price = $request->min;
-        $max_price = $request->max;
-        if ($min_price !== null && $max_price !== null) {
-            $query->whereBetween('price', [$min_price, $max_price]);
+        $max_price_req = $request->max; // Đổi tên biến để không trùng với $max_price ở trên
+        if ($min_price !== null && $max_price_req !== null) {
+            $query->whereBetween('price', [$min_price, $max_price_req]);
         }
     }
-    // ---------------------------
 
-    // 4. Phân trang & giữ lại tham số URL
+    // 4. Phân trang
     $product_cat = $query->paginate(12)->withQueryString();
 
-    // 5. Lấy sản phẩm mới nhất cho sidebar
+    // 5. Lấy sản phẩm mới nhất
     $new_products = Product::orderBy('created_at', 'DESC')->take(6)->get();
 
     return view('client/collection/product_cat',[
         'nameCat' => $name_cat ? $name_cat->name : 'Danh mục',
         'categories' => $categories,
         'productCat' => $product_cat,
-        'new_products' => $new_products
+        'new_products' => $new_products,
+        'max_price' => $max_price // <-- Truyền thêm biến này
     ]);
 }
 }
