@@ -339,7 +339,7 @@ $first_part = $components[1];
                                                     </div>
                                                     <div class="col-lg-8 col-sm-8 col-8 cart-detail-product m-0 p-0">
                                                         <p class="m-0">{{ $details['name'] }}</p>
-                                                        <p class="m-0"> Giá: {{ number_format($details['price'],3,".",".") }} ₫</p>
+                                                        <p class="m-0"> Giá: {{ number_format($details['price'],0,".",".") }} ₫</p>
                                                         <p class="m-0"> SL:{{ $details['quantity'] }}</p>
                                                     </div>
                                                 </div>

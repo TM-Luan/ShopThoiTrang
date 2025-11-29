@@ -46,7 +46,7 @@
                                             <h4 class="nomargin" style="line-height: 100px;">{{ $details['name'] }}</h4>
                                         </div>
                                     </td>
-                                    <td>{{ number_format($details['price'],3,".",".") }} ₫</td>
+                                    <td>{{ number_format($details['price'],0,".",".") }} ₫</td>
                                     <td>
                                         <a href="/add-to-cart/<?=$details->id?>" class="btn btn-success">THÊM VÀO GIỎ HÀNG</a>
                                     </td>
