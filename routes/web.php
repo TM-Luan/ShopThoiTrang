@@ -95,6 +95,7 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('/admin/bills/edit/{id}', 'App\Http\Controllers\Admin\BillsController@edit');
     Route::post('/admin/bills/update/{id}', 'App\Http\Controllers\Admin\BillsController@update');
     Route::post('/admin/bills/delete', 'App\Http\Controllers\Admin\BillsController@delete');
+   Route::get('/admin/bills/detail/{id}', 'App\Http\Controllers\Admin\BillsController@detail');
 });
 
 

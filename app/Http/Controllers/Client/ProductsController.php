@@ -53,7 +53,7 @@ class ProductsController extends Controller
     public function showItem($id){
         $categories = new Category();
         $cate = $categories->all(array('name', 'id'));
-        $product = Product::find($id);
+        $product = Product::with('variants')->find($id);
         $cateName= Category::find($product->catalog_id);
         $related = Product::where('catalog_id', $product->catalog_id)->take(4)->get();
         return view('client/collection/product',[

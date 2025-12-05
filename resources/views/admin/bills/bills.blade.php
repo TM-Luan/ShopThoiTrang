@@ -43,9 +43,9 @@
                                         <td>{{$bill->payment_status}}</td>
                                         <td>{{$bill->delivery_status}}</td>
                                         <td>
-                                            <a href="/admin/bills/detail" class="btn btn-primary">
-                                                <i class="fa fa-info-circle text-white" aria-hidden="true"></i>
-                                            </a>
+                                           <a href="/admin/bills/detail/{{$bill->id_order}}" class="btn btn-primary">
+    <i class="fa fa-info-circle text-white" aria-hidden="true"></i>
+</a>
                                             <!-- Button trigger modal -->
                                             <a href="/admin/bills/edit/<?=$bill->id?>" class="btn btn-success">
                                                 <i class="fa fa-pencil-square-o text-white" aria-hidden="true"></i>

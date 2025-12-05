@@ -56,7 +56,7 @@
                                         <div class="text-center mg-b-pro-edt custom-pro-edt-ds">
                                             <button type="button" class="btn btn-primary waves-effect waves-light m-r-10">Lưu
                                             </button>
-                                            <button type="button" class="btn btn-warning waves-effect waves-light">Hủy
+                                            <a href="/admin/orders" class="btn btn-warning waves-effect waves-light">Hủy</a>
                                             </button>
                                         </div>
                                     </div>

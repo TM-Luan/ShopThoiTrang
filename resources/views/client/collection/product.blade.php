@@ -59,44 +59,49 @@
 
                         <p>{{ $product->short_description }}</p>
 
-                        <div class="product__options" style="margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid #ebebeb;">
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-6">
-                                      <label for="product_size" style="font-weight: 700; color: #1c1c1c;">Kích thước (Size):</label>
-                                    <div class="form-group">
-                                      
-                                        <select class="form-control" id="product_size" style="height: 40px; border-radius: 0; cursor: pointer;">
-                                            <option value="S">Size S</option>
-                                            <option value="M" selected>Size M</option>
-                                            <option value="L">Size L</option>
-                                            <option value="XL">Size XL</option>
-                                            <option value="XXL">Size XXL</option>
-                                            <option value="29">Size 29</option>
-                                            <option value="30">Size 30</option>
-                                            <option value="31">Size 31</option>
-                                            <option value="32">Size 32</option>
-                                            <option value="Freesize">Freesize</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6">
-                                      <label for="product_color" style="font-weight: 700; color: #1c1c1c;">Màu sắc:</label>
-                                    <div class="form-group">
-                                      
-                                        <select class="form-control" id="product_color" style="height: 40px; border-radius: 0; cursor: pointer;">
-                                            <option value="Đen">Màu Đen</option>
-                                            <option value="Trắng" selected>Màu Trắng</option>
-                                            <option value="Xanh">Màu Xanh</option>
-                                            <option value="Đỏ">Màu Đỏ</option>
-                                            <option value="Vàng">Màu Vàng</option>
-                                            <option value="Xám">Màu Xám</option>
-                                            <option value="Be">Màu Be</option>
-                                            <option value="Nâu">Màu Nâu</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                       {{-- Xử lý lấy danh sách Size và Màu duy nhất từ biến thể --}}
+@php
+    // Lấy mảng các size duy nhất và loại bỏ giá trị rỗng
+    $uniqueSizes = $product->variants->pluck('size')->unique()->filter();
+    // Lấy mảng các màu duy nhất và loại bỏ giá trị rỗng
+    $uniqueColors = $product->variants->pluck('color')->unique()->filter();
+@endphp
+
+<div class="product__options" style="margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid #ebebeb;">
+    <div class="row">
+        {{-- Phần chọn Size --}}
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <label for="product_size" style="font-weight: 700; color: #1c1c1c;">Kích thước (Size):</label>
+            <div class="form-group">
+                <select class="form-control" id="product_size" style="height: 40px; border-radius: 0; cursor: pointer;">
+                    @if($uniqueSizes->count() > 0)
+                        @foreach($uniqueSizes as $size)
+                            <option value="{{ $size }}">{{ $size }}</option>
+                        @endforeach
+                    @else
+                        <option value="">Không có tùy chọn</option>
+                    @endif
+                </select>
+            </div>
+        </div>
+
+        {{-- Phần chọn Màu --}}
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <label for="product_color" style="font-weight: 700; color: #1c1c1c;">Màu sắc:</label>
+            <div class="form-group">
+                <select class="form-control" id="product_color" style="height: 40px; border-radius: 0; cursor: pointer;">
+                    @if($uniqueColors->count() > 0)
+                        @foreach($uniqueColors as $color)
+                            <option value="{{ $color }}">{{ $color }}</option>
+                        @endforeach
+                    @else
+                        <option value="">Không có tùy chọn</option>
+                    @endif
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
 
                         <a href="javascript:void(0)" onclick="addToCartWithOption({{$product->id}})" class="primary-btn">THÊM VÀO GIỎ HÀNG</a>
 

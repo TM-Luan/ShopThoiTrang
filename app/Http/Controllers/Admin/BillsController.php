@@ -17,9 +17,18 @@ class BillsController extends Controller
     public function add(){
         return view('admin/bills/add');
     }
-    public function detail(){
-        return view('admin/bills/detail');
-    }
+   public function detail($id){
+    // Lấy danh sách sản phẩm trong đơn hàng
+    $details = Detail_Bill::where('id_order', $id)->get();
+    
+    // Lấy thông tin chung của đơn hàng để hiển thị tiêu đề nếu cần
+    $bill = Bill::where('id_order', $id)->first();
+
+    return view('admin/bills/detail', [
+        'details' => $details,
+        'bill' => $bill
+    ]);
+}
     public function edit($id){
         $detail_bill = Bill::find($id);
         return view('admin/bills/edit', ['detailBill' => $detail_bill]);

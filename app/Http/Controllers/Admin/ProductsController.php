@@ -98,19 +98,21 @@ class ProductsController extends Controller
         // 1. Xử lý ảnh
         if (request()->hasFile('image')){
             $imageName = $request->file('image')->getClientOriginalName();
+            // Lưu vào thư mục public/upload/products
             $request->file('image')->move(public_path('upload/products/'), $imageName);
         } else {
+            // Giữ lại ảnh cũ
             $imageName = $request->input('old_image');
         }
 
-        // 2. Xử lý thông tin
+        // 2. Xử lý thông tin kỹ thuật (gom thành chuỗi)
         $chat_lieu = $request->input('chat_lieu');
         $kieu_dang = $request->input('kieu_dang');
         $xuat_xu = $request->input('xuat_xu');
         $khac = $request->input('thong_tin_khac');
         $information = $chat_lieu.'|'.$kieu_dang.'|'.$xuat_xu.'|'.$khac;
 
-        // 3. Cập nhật bảng Product
+        // 3. Cập nhật bảng Product chính
         $product = Product::find($id);
         $product->name = $request->input('name');
         $product->price = $request->input('price');
@@ -122,33 +124,39 @@ class ProductsController extends Controller
         $product->outstanding = $request->input('outstanding') ?? 0;
         $product->catalog_id = $request->input('catalog_id');
         
-        // 4. Xử lý cập nhật Biến thể (Cách đơn giản: Xóa cũ -> Thêm mới)
+        // 4. Xử lý cập nhật Biến thể (Quan trọng)
         if ($request->has('variant_size')) {
-            // Xóa hết biến thể cũ
+            // Bước A: Xóa hết biến thể cũ của sản phẩm này
             ProductVariant::where('product_id', $id)->delete();
 
+            // Bước B: Thêm lại các biến thể mới từ form
             $sizes = $request->variant_size;
             $colors = $request->variant_color;
             $quantities = $request->variant_quantity;
-            $totalQty = 0;
+            
+            $totalQty = 0; // Biến tính tổng tồn kho
 
             for ($i = 0; $i < count($sizes); $i++) {
+                // Chỉ lưu nếu có đủ Size và Màu
                 if (!empty($sizes[$i]) && !empty($colors[$i])) {
                     ProductVariant::create([
                         'product_id' => $id,
                         'size' => $sizes[$i],
                         'color' => $colors[$i],
                         'quantity' => $quantities[$i],
-                        'sku' => $id . '-' . $sizes[$i] . '-' . $i
+                        'sku' => $id . '-' . $sizes[$i] . '-' . $i // Tạo mã SKU tự động
                     ]);
+                    // Cộng dồn số lượng
                     $totalQty += $quantities[$i];
                 }
             }
-            // Cập nhật lại tổng tồn kho
+            
+            // Cập nhật lại tổng tồn kho vào bảng products (nếu cần dùng cột availability)
             $product->availability = $totalQty;
         }
 
         $product->save();
+        
         toast('Cập nhật thành công!','success');
         return redirect('/admin/products/edit/'.$id);
     }

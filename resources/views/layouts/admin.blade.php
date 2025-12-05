@@ -158,7 +158,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a title="View Mail" href="/admin/blogs/add">
+                                <a title="View Mail" href="/admin/blogs/create">
                                     <i class="fa fa-plus-square-o sub-icon-mg" aria-hidden="true"></i>
                                     <span class="mini-sub-pro">Thêm mới</span>
                                 </a>

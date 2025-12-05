@@ -39,7 +39,7 @@
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="text-center mg-b-pro-edt custom-pro-edt-ds">
                                                 <button type="submit" class="btn btn-primary waves-effect waves-light m-r-10">Lưu</button>
-                                                <button type="button" class="btn btn-warning waves-effect waves-light">Hủy</button>
+<a href="/admin/categories" class="btn btn-warning waves-effect waves-light">Hủy</a>
                                             </div>
                                         </div>
                                     </div>
