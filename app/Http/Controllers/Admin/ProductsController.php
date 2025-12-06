@@ -33,6 +33,8 @@ class ProductsController extends Controller
             $imageName = 'no-image.jpg'; // Mặc định nếu không up ảnh
         }
 
+
+        
         // 2. Tạo thông tin cơ bản (Information chuỗi)
         // Lấy tên các trường mới từ form (chat_lieu, kieu_dang...)
         $chat_lieu = $request->input('chat_lieu');

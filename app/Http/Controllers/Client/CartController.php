@@ -121,25 +121,40 @@ class CartController extends Controller
         }
     }
 
-    public function remove(Request $request)
+   public function remove(Request $request)
     {
         if ($request->id) {
             $cart = session()->get('cart');
-            // Xóa Session
-            if (isset($cart[$request->id])) {
-                unset($cart[$request->id]);
-                session()->put('cart', $cart);
+            
+            // --- Logic xóa Session và Database (Giữ nguyên logic của bạn) ---
+            
+            // XỬ LÝ CHO KHÁCH CÓ LOGIN
+            if(!empty(Auth::user())){
+                $cartItem = Cart::find($request->id);
+                if ($cartItem && $cartItem->id_user == Auth::user()->id) {
+                     // Tạo lại key session để xóa cho khớp
+                     $sessionKey = $cartItem->id_product . '_' . $cartItem->size . '_' . $cartItem->color;
+                     if (isset($cart[$sessionKey])) {
+                        unset($cart[$sessionKey]);
+                        session()->put('cart', $cart);
+                     }
+                     $cartItem->forceDelete();
+                }
+            } 
+            // XỬ LÝ CHO KHÁCH VÃNG LAI
+            else {
+                if (isset($cart[$request->id])) {
+                    unset($cart[$request->id]);
+                    session()->put('cart', $cart);
+                }
             }
 
-            // Xóa Database
-            if(!empty(Auth::user())){
-                // Tìm theo ID chính của bảng cart (được truyền từ view)
-                $cartItem = Cart::find($request->id);
-                 if ($cartItem && $cartItem->id_user == Auth::user()->id) {
-                     $cartItem->forceDelete();
-                 }
-            }
+            // Ghi thông báo vào session để hiện sau khi reload
             alert()->success('Thông báo!','Xóa sản phẩm thành công!');
+
+            // --- QUAN TRỌNG: TRẢ VỀ JSON THAY VÌ REDIRECT ---
+            // Việc này giúp AJAX nhận phản hồi ngay lập tức mà không cần tải trang ngầm
+            return response()->json(['success' => true]);
         }
     }
 
@@ -233,7 +248,7 @@ class CartController extends Controller
             "email" => $request->input('email'),
             "phone" => $request->input('phone'),
             "address" => $request->input('address'),
-            "note" => $request->input('note'),
+            "note" => $request->input('note')??'',
             "count" => $request->input('count'),
             "total" => $request->input('total'),
         ];
